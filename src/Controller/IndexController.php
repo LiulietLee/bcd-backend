@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class IndexController extends Controller {
 
     /**
-     * @Route('/', name='index')
+     * @Route("/", name="index")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -29,7 +29,7 @@ class IndexController extends Controller {
         if ($form->isSubmitted() && $form->isValid()) {
             $content = $form->getData()->getContent();
             if ($content != "") {
-                $this->redirect("/search/$content");
+                return $this->redirect("/search/$content");
             }
         }
 

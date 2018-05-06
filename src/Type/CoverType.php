@@ -8,7 +8,7 @@ class CoverType {
     const Article = 2;
     const Live = 3;
 
-    static function typeFromString(string $str): ?CoverType {
+    static function typeFromString(string $str): ?int {
         $lowerStr = strtolower($str);
         switch ($lowerStr) {
             case "av": return CoverType::Video;

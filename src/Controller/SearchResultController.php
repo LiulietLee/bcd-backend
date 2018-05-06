@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 class SearchResultController extends Controller {
 
     /**
-     * @Route('/search/{content}', name='searchContent')
+     * @Route("/search/{content}", name="searchContent")
      * @param string $content
      * @param Request $request
      */
@@ -25,6 +25,10 @@ class SearchResultController extends Controller {
 
         $typeString = substr($content, 0, 2);
         $type = CoverType::typeFromString($typeString);
+        if (!$type) {
+            throw $this->createNotFoundException('请检查一下格式哦');
+        }
+
         $nid = substr($content, 2, strlen($content) - 2);
         $hacker = new CoverHacker();
         $result = $hacker->getCoverByTypeAndNID($type, $nid);

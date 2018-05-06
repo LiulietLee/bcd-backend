@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\SearchRecord;
+use App\Type\CoverType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @method SearchRecord|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +17,16 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class SearchRecordRepository extends ServiceEntityRepository
 {
+    protected $repository;
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, SearchRecord::class);
+        $this->repository = $this->getD;
+    }
+
+    public function findByTypeAfterTime(CoverType $type, int $time) {
+
     }
 
 //    /**
