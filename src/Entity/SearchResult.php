@@ -8,6 +8,12 @@ class SearchResult {
     protected $title;
     protected $author;
 
+    public function __construct(\stdClass $jsonData = null) {
+        $this->setAuthor($jsonData->author);
+        $this->setTitle($jsonData->title);
+        $this->setURL($jsonData->url);
+    }
+
     public function getURL(): string {
         return $this->url;
     }

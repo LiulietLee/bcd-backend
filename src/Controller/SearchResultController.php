@@ -35,7 +35,7 @@ class SearchResultController extends Controller {
         if ($result) {
             // TODO save record to database
 
-            $this->render('result.html.twig', array(
+            return $this->render('result.html.twig', array(
                 'title' => $result->getTitle(),
                 'author' => $result->getAuthor(),
                 'coverURL' => $result->getURL(),
