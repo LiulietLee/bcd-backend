@@ -31,7 +31,7 @@ class IndexController extends Controller {
         if ($form->isSubmitted() && $form->isValid()) {
             $content = $form->getData()->getContent();
             if ($content != "") {
-                return $this->redirect("/search/$content");
+                return $this->redirect("/$content");
             }
         }
 

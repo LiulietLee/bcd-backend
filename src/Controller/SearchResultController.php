@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchResultController extends AbstractController {
 
     /**
-     * @Route("/search/{content}", name="searchContent")
+     * @Route("/{content}", name="searchContent")
      * @param string $content
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -32,20 +32,31 @@ class SearchResultController extends AbstractController {
 
         $nid = substr($content, 2, strlen($content) - 2);
         $hacker = new CoverHacker();
+
+
+        $record = $this->repository()->findOnyByTypeAndNID($type, $nid);
+        if ($record) {
+            $count = $record->getDownloadCount();
+            $record->setDownloadCount($count + 1);
+            $this->entityManager()->flush();
+        }
+
         $result = $hacker->getCoverByTypeAndNID($type, $nid);
         if ($result) {
-            // TODO need refactor
-            $record = new SearchRecord();
+            // TODO refactor
+            if (!$record) {
+                $record = new SearchRecord();
 
-            $zone = new \DateTimeZone("	Asia/Shanghai");
-            $timeInterface = new \DateTime("now", $zone);
-            $record->setTime($timeInterface);
-            $record->setType($type);
-            $record->setCoverURL($result->getURL());
-            $record->setDownloadCount(1);
-            $record->setNid($nid);
+                $zone = new \DateTimeZone("	Asia/Shanghai");
+                $timeInterface = new \DateTime("now", $zone);
+                $record->setTime($timeInterface);
+                $record->setType($type);
+                $record->setCoverURL($result->getURL());
+                $record->setDownloadCount(1);
+                $record->setNid($nid);
 
-            $this->insert($record);
+                $this->insert($record);
+            }
 
             return $this->render('result.html.twig', array(
                 'title' => $result->getTitle(),

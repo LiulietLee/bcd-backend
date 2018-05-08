@@ -24,6 +24,12 @@ class SearchRecordRepository extends ServiceEntityRepository
         parent::__construct($registry, SearchRecord::class);
     }
 
+    /**
+     * @param int|null $type
+     * @param int $time
+     * @param int $limit
+     * @return SearchRecord[]|null
+     */
     public function findByTypeAfterTime(?int $type = null, int $time, int $limit = 10) {
         $qb = $this->createQueryBuilder('p');
         $qb->andWhere('p.time > :time')->setParameter('time', $time);
@@ -36,15 +42,13 @@ class SearchRecordRepository extends ServiceEntityRepository
         return $result;
     }
 
-    /*
-    public function findOneBySomeField($value): ?SearchRecord
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    /**
+     * @param int $type
+     * @param int $nid
+     * @return SearchRecord|null
+     */
+    public function findOnyByTypeAndNID(int $type, int $nid) {
+        return $this->findOneBy(['type' => $type, 'nid' => $nid]);
     }
-    */
+
 }
