@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\SearchContent;
+use App\Entity\SearchRecord;
+use App\Repository\SearchRecordRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,7 +23,7 @@ class IndexController extends Controller {
 
         $form = $this->createFormBuilder($searchContent)
             ->add('content', TextType::class)
-            ->add('submit', SubmitType::class)
+            ->add('search', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);

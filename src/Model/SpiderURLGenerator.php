@@ -11,4 +11,14 @@ class SpiderURLGenerator {
         return $fullURL;
     }
 
+    static function cvCoverInfoURLByCID(int $cid): string {
+        $fullURL = self::$baseURL. "/cv/info/$cid";
+        return $fullURL;
+    }
+
+    static function lvCoverInfoURLByLID(int $lid): string {
+        $fullURL = self::$baseURL. "/lv/info/$lid";
+        return $fullURL;
+    }
+
 }

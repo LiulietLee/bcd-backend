@@ -36,6 +36,11 @@ class SearchRecord
      */
     private $coverURL;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $downloadCount;
+
     public function getId()
     {
         return $this->id;
@@ -85,6 +90,18 @@ class SearchRecord
     public function setCoverURL(?string $coverURL): self
     {
         $this->coverURL = $coverURL;
+
+        return $this;
+    }
+
+    public function getDownloadCount(): ?int
+    {
+        return $this->downloadCount;
+    }
+
+    public function setDownloadCount(int $downloadCount): self
+    {
+        $this->downloadCount = $downloadCount;
 
         return $this;
     }

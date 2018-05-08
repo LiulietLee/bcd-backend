@@ -22,29 +22,19 @@ class SearchRecordRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, SearchRecord::class);
-        $this->repository = $this->getD;
     }
 
-    public function findByTypeAfterTime(CoverType $type, int $time) {
-
-    }
-
-//    /**
-//     * @return SearchRecord[] Returns an array of SearchRecord objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+    public function findByTypeAfterTime(?int $type = null, int $time, int $limit = 10) {
+        $qb = $this->createQueryBuilder('p');
+        $qb->andWhere('p.time > :time')->setParameter('time', $time);
+        if ($type) $qb->andWhere('p.type = :type')->setParameter('type', $type);
+        $result = $qb->orderBy('p.download_count', 'ASC')
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+
+        return $result;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?SearchRecord
