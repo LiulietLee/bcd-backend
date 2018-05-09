@@ -2,13 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\SearchRecord;
+use App\Entity\CoverRecord;
 use App\Controller\AbstractController;
 use App\Type\CoverType;
 use App\Model\CoverHacker;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SearchResultController extends AbstractController {
@@ -16,10 +15,9 @@ class SearchResultController extends AbstractController {
     /**
      * @Route("/{content}", name="searchContent")
      * @param string $content
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(string $content, Request $request) {
+    public function index(string $content) {
         if (strlen($content) < 3) {
             throw $this->createAccessDeniedException('搜索内容太短啦！');
         }
@@ -41,20 +39,10 @@ class SearchResultController extends AbstractController {
             $this->entityManager()->flush();
         }
 
-        $result = $hacker->getCoverByTypeAndNID($type, $nid);
+        $result = $hacker->getCoverByTypeAndNID($type, $nid, $content);
         if ($result) {
-            // TODO refactor
             if (!$record) {
-                $record = new SearchRecord();
-
-                $zone = new \DateTimeZone("	Asia/Shanghai");
-                $timeInterface = new \DateTime("now", $zone);
-                $record->setTime($timeInterface);
-                $record->setType($type);
-                $record->setCoverURL($result->getURL());
-                $record->setDownloadCount(1);
-                $record->setNid($nid);
-
+                $record = $this->repository()->create($type, $result->getURL(), $nid);
                 $this->insert($record);
             }
 

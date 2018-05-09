@@ -4,14 +4,26 @@ namespace App\Entity;
 
 class SearchResult {
 
+    protected $id;
     protected $url;
     protected $title;
     protected $author;
 
     public function __construct(\stdClass $jsonData = null) {
-        $this->setAuthor($jsonData->author);
-        $this->setTitle($jsonData->title);
-        $this->setURL($jsonData->url);
+        if ($jsonData) {
+            $this->setID($jsonData->id);
+            $this->setAuthor($jsonData->author);
+            $this->setTitle($jsonData->title);
+            $this->setURL($jsonData->url);
+        }
+    }
+
+    public function getID(): string {
+        return $this->id;
+    }
+
+    public function setID(string $id) {
+        $this->id = $id;
     }
 
     public function getURL(): string {

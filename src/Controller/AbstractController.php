@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use App\Entity\SearchRecord;
+use App\Entity\CoverRecord;
 
 class AbstractController extends Controller {
 
@@ -27,7 +27,7 @@ class AbstractController extends Controller {
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
     protected function repository() {
-        return $this->getDoctrine()->getRepository(SearchRecord::class);
+        return $this->getDoctrine()->getRepository(CoverRecord::class);
     }
 
 }

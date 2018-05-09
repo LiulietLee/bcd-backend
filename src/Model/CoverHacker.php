@@ -8,7 +8,7 @@ use App\Model\SpiderURLGenerator;
 
 class CoverHacker {
 
-    public function getCoverByTypeAndNID(int $type, int $nid) {
+    public function getCoverByTypeAndNID(int $type, int $nid, string $id = "") {
         $spiderURL = null;
         switch ($type) {
             case CoverType::Video:
@@ -21,6 +21,7 @@ class CoverHacker {
 
         $json = file_get_contents($spiderURL);
         $jsonData = json_decode($json);
+        $jsonData->id = $id;
 
         if (property_exists($jsonData, "error")) {
             return $jsonData->reason;

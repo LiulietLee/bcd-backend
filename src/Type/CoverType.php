@@ -4,6 +4,7 @@ namespace App\Type;
 
 class CoverType {
 
+    const Null = 0;
     const Video = 1;
     const Article = 2;
     const Live = 3;
@@ -16,6 +17,23 @@ class CoverType {
             case "lv": return CoverType::Live;
             default: return null;
         }
+    }
+
+    static function typeToStringWithTypeAndNID(int $type, int $nid): ?string {
+        switch ($type) {
+            case CoverType::Video:
+                $id = "av";
+                break;
+            case CoverType::Live:
+                $id = "lv";
+                break;
+            case CoverType::Article:
+                $id = "cv";
+                break;
+            default: return null;
+        }
+
+        return $id. $nid;
     }
 
 }

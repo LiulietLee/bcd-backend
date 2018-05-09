@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\SearchContent;
-use App\Entity\SearchRecord;
-use App\Repository\SearchRecordRepository;
+use App\Entity\CoverRecord;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
