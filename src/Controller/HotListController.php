@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AbstractController;
 use App\Entity\SearchResult;
 use App\Type\CoverType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HotListController extends AbstractController {
@@ -14,17 +15,26 @@ class HotListController extends AbstractController {
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function index() {
-        $result = $this->repository()->findByTypeAfterTime(CoverType::Null, time() - 7 * 24 * 60 * 60);
-        $list = [];
+        $result = $this->CoverRecordRepository()->findByTypeAfterTime(CoverType::Null, time() - 7 * 24 * 60 * 60);
+
+        $list = Array();
         foreach ($result as $item) {
-            $result = new \stdClass();
-            $result->id = CoverType::typeToStringWithTypeAndNID($item->getType(), $item->getNid());
-            $result->url = $item->getUrl();
-            print_r($result);
-            $list[] = json_encode($result);
+            $listItem = new \stdClass();
+
+            $listItem->id = $item->getStringID();
+            $listItem->author = $item->getAuthor();
+            $listItem->title = $item->getTitle();
+            $listItem->url = $item->getUrl();
+
+            $list[] = $listItem;
         }
 
-        return $this->json($list);
+        $list = json_encode($list);
+
+        $response = new Response($list);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
 }

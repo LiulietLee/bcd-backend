@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Type\CoverType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,6 +41,16 @@ class CoverRecord
      * @ORM\Column(type="integer")
      */
     private $dlcount;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $author;
 
     public function getId()
     {
@@ -104,5 +115,48 @@ class CoverRecord
         $this->dlcount = $dlcount;
 
         return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getStringID(): ?string {
+        $id = "";
+        switch ($this->type) {
+            case CoverType::Video:
+                $id .= "av";
+                break;
+            case CoverType::Article:
+                $id .= "cv";
+                break;
+            case CoverType::Live:
+                $id .= "lv";
+                break;
+            default:
+                return null;
+        }
+        $id .= $this->nid;
+        return $id;
     }
 }

@@ -29,7 +29,7 @@ class CoverRecordRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p');
         $qb->andWhere('p.time > :time')->setParameter('time', $time);
         if ($type) $qb->andWhere('p.type = :type')->setParameter('type', $type);
-        $result = $qb->orderBy('p.dlcount', 'ASC')
+        $result = $qb->orderBy('p.dlcount', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
@@ -50,9 +50,11 @@ class CoverRecordRepository extends ServiceEntityRepository
      * @param int $type
      * @param string $url
      * @param int $nid
+     * @param string $title
+     * @param string $author
      * @return CoverRecord
      */
-    public function create(int $type, string $url, int $nid) {
+    public function create(int $type, string $url, int $nid, string $title, string $author) {
         $record = new CoverRecord();
 
         $zone = new \DateTimeZone("	Asia/Shanghai");
@@ -62,6 +64,8 @@ class CoverRecordRepository extends ServiceEntityRepository
         $record->setUrl($url);
         $record->setDlcount(1);
         $record->setNid($nid);
+        $record->setAuthor($author);
+        $record->setTitle($title);
 
         return $record;
     }

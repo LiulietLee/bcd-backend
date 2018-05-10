@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CoverRecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\CoverRecord;
 
@@ -24,9 +25,9 @@ class AbstractController extends Controller {
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return CoverRecordRepository
      */
-    protected function repository() {
+    protected function CoverRecordRepository(): CoverRecordRepository {
         return $this->getDoctrine()->getRepository(CoverRecord::class);
     }
 

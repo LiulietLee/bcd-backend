@@ -32,17 +32,17 @@ class SearchResultController extends AbstractController {
         $hacker = new CoverHacker();
 
 
-        $record = $this->repository()->findOnyByTypeAndNID($type, $nid);
+        $record = $this->CoverRecordRepository()->findOnyByTypeAndNID($type, $nid);
         if ($record) {
-            $count = $record->getDownloadCount();
-            $record->setDownloadCount($count + 1);
+            $count = $record->getDlcount();
+            $record->setDlcount($count + 1);
             $this->entityManager()->flush();
         }
 
         $result = $hacker->getCoverByTypeAndNID($type, $nid, $content);
         if ($result) {
             if (!$record) {
-                $record = $this->repository()->create($type, $result->getURL(), $nid);
+                $record = $this->CoverRecordRepository()->create($type, $result->getURL(), $nid, $result->getTitle(), $result->getAuthor());
                 $this->insert($record);
             }
 
