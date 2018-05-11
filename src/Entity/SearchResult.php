@@ -50,4 +50,13 @@ class SearchResult {
         $this->author = $author;
     }
 
+    public function stdClass(): \stdClass {
+        $result = new \stdClass();
+        $result->id = $this->getID();
+        $result->author = $this->getAuthor();
+        $result->title = $this->getTitle();
+        $result->url = $this->getURL();
+        return $result;
+    }
+
 }

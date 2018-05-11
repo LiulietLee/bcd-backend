@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\API;
 
 use App\Controller\AbstractController;
 use App\Entity\SearchResult;
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HotListController extends AbstractController {
 
     /**
-     * @Route("/hot_list", name="hotList")
+     * @Route("/api/hot_list", name="hotListAPI")
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function index() {

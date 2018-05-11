@@ -17,6 +17,7 @@
         "symfony/yaml": "^4.0"
     },
     "require-dev": {
+        "easycorp/easy-deploy-bundle": "^1.0",
         "sensiolabs/security-checker": "^4.1",
         "symfony/dotenv": "^4.0",
         "symfony/maker-bundle": "^1.4",

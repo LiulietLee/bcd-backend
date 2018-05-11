@@ -59,6 +59,9 @@
     "doctrine/orm": {
         "version": "v2.6.1"
     },
+    "easycorp/easy-deploy-bundle": {
+        "version": "v1.0.5"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -132,6 +135,9 @@
         "version": "v4.0.9"
     },
     "symfony/event-dispatcher": {
+        "version": "v4.0.9"
+    },
+    "symfony/expression-language": {
         "version": "v4.0.9"
     },
     "symfony/filesystem": {

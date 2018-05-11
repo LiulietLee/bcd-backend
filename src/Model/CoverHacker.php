@@ -8,7 +8,13 @@ use App\Model\SpiderURLGenerator;
 
 class CoverHacker {
 
-    public function getCoverByTypeAndNID(int $type, int $nid, string $id = "") {
+    /**
+     * @param int $type
+     * @param int $nid
+     * @param string $id
+     * @return SearchResult
+     */
+    public function getCoverByTypeAndNID(int $type, int $nid, string $id = ""): SearchResult {
         $spiderURL = null;
         switch ($type) {
             case CoverType::Video:

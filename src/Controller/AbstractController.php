@@ -27,7 +27,7 @@ class AbstractController extends Controller {
     /**
      * @return CoverRecordRepository
      */
-    protected function CoverRecordRepository(): CoverRecordRepository {
+    protected function coverRecordRepository(): CoverRecordRepository {
         return $this->getDoctrine()->getRepository(CoverRecord::class);
     }
 

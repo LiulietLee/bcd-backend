@@ -31,18 +31,28 @@ class SearchResultController extends AbstractController {
         $nid = substr($content, 2, strlen($content) - 2);
         $hacker = new CoverHacker();
 
-
-        $record = $this->CoverRecordRepository()->findOnyByTypeAndNID($type, $nid);
+        $record = $this->coverRecordRepository()->findOnyByTypeAndNID($type, $nid);
         if ($record) {
             $count = $record->getDlcount();
             $record->setDlcount($count + 1);
             $this->entityManager()->flush();
+
+            $result = new \stdClass();
+            $result->title = $record->getTitle();
+            $result->author = $record->getAuthor();
+            $result->url = $record->getUrl();
+
+            return $this->render('result.html.twig', array(
+                'title' => $result->title,
+                'author' => $result->author,
+                'coverURL' => $result->url,
+            ));
         }
 
         $result = $hacker->getCoverByTypeAndNID($type, $nid, $content);
         if ($result) {
             if (!$record) {
-                $record = $this->CoverRecordRepository()->create($type, $result->getURL(), $nid, $result->getTitle(), $result->getAuthor());
+                $record = $this->coverRecordRepository()->create($type, $result->url(), $nid, $result->getTitle(), $result->getAuthor());
                 $this->insert($record);
             }
 
