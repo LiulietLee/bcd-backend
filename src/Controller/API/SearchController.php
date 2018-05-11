@@ -33,14 +33,14 @@ class SearchController extends AbstractController {
             $record = $this->coverRecordRepository()->findOnyByTypeAndNID($type, $nid);
 
             if ($record) {
-                $count = $record->getDlcount();
-                $record->setDlcount($count + 1);
+                $count = $record->getDownloadCount();
+                $record->setDownloadCount($count + 1);
                 $this->entityManager()->flush();
 
                 $result = new \stdClass();
                 $result->title = $record->getTitle();
                 $result->author = $record->getAuthor();
-                $result->url = $record->getUrl();
+                $result->url = $record->getURL();
 
                 $response = new Response(json_encode($result));
             } else {

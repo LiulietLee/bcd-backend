@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hot list</title>
+</head>
+    <body>
+        {% for item in list %}
+            <h2>{{ item.id }}</h2>
+            <h3>标题：{{ item.title }}</h3>
+            <p>UP主：{{ item.author }}</p>
+            <p>封面链接：{{ item.url }}</p>
+            <p>下载次数：{{ item.count }}</p>
+        {% endfor %}
+    </body>
+</html>

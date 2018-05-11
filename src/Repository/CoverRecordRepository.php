@@ -61,9 +61,9 @@ class CoverRecordRepository extends ServiceEntityRepository
         $timeInterface = new \DateTime("now", $zone);
         $record->setTime($timeInterface);
         $record->setType($type);
-        $record->setUrl($url);
-        $record->setDlcount(1);
-        $record->setNid($nid);
+        $record->setURL($url);
+        $record->setDownloadCount(1);
+        $record->setNID($nid);
         $record->setAuthor($author);
         $record->setTitle($title);
 

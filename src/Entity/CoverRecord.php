@@ -69,12 +69,12 @@ class CoverRecord
         return $this;
     }
 
-    public function getNid(): ?int
+    public function getNID(): ?int
     {
         return $this->nid;
     }
 
-    public function setNid(int $nid): self
+    public function setNID(int $nid): self
     {
         $this->nid = $nid;
 
@@ -93,24 +93,24 @@ class CoverRecord
         return $this;
     }
 
-    public function getUrl(): ?string
+    public function getURL(): ?string
     {
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setURL(string $url): self
     {
         $this->url = $url;
 
         return $this;
     }
 
-    public function getDlcount(): ?int
+    public function getDownloadCount(): ?int
     {
         return $this->dlcount;
     }
 
-    public function setDlcount(int $dlcount): self
+    public function setDownloadCount(int $dlcount): self
     {
         $this->dlcount = $dlcount;
 

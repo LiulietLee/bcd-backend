@@ -12,7 +12,7 @@ class HotListController extends AbstractController {
 
     /**
      * @Route("/hot_list", name="hotList")
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return Response
      */
     public function index() {
         $result = $this->coverRecordRepository()->findByTypeAfterTime(CoverType::Null, time() - 7 * 24 * 60 * 60);
@@ -24,17 +24,15 @@ class HotListController extends AbstractController {
             $listItem->id = $item->getStringID();
             $listItem->author = $item->getAuthor();
             $listItem->title = $item->getTitle();
-            $listItem->url = $item->getUrl();
+            $listItem->url = $item->getURL();
+            $listItem->count = $item->getDownloadCount();
 
             $list[] = $listItem;
         }
 
-        $list = json_encode($list);
-
-        $response = new Response($list);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        return $this->render('hotList.html.twig', array(
+            'list' => $list,
+        ));
     }
 
 }

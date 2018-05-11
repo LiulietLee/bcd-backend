@@ -24,7 +24,8 @@ class HotListController extends AbstractController {
             $listItem->id = $item->getStringID();
             $listItem->author = $item->getAuthor();
             $listItem->title = $item->getTitle();
-            $listItem->url = $item->getUrl();
+            $listItem->url = $item->getURL();
+            $listItem->count = $item->getDownloadCount();
 
             $list[] = $listItem;
         }
