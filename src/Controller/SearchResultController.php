@@ -52,7 +52,7 @@ class SearchResultController extends AbstractController {
         $result = $hacker->getCoverByTypeAndNID($type, $nid, $content);
         if ($result) {
             if (!$record) {
-                $record = $this->coverRecordRepository()->create($type, $result->url(), $nid, $result->getTitle(), $result->getAuthor());
+                $record = $this->coverRecordRepository()->create($type, $result->getURL(), $nid, $result->getTitle(), $result->getAuthor());
                 $this->insert($record);
             }
 
