@@ -12,17 +12,22 @@ class CoverHacker {
      * @param int $type
      * @param int $nid
      * @param string $id
-     * @return SearchResult
+     * @return SearchResult|null
      */
-    public function getCoverByTypeAndNID(int $type, int $nid, string $id = ""): SearchResult {
+    public function getCoverByTypeAndNID(int $type, int $nid, string $id = ""): ?SearchResult {
         $spiderURL = null;
         switch ($type) {
             case CoverType::Video:
                 $spiderURL = SpiderURLGenerator::avCoverInfoURLByAID($nid);
                 break;
-            default:
-                // TODO other spiders are under building...
+            case CoverType::Article:
+                $spiderURL = SpiderURLGenerator::cvCoverInfoURLByCID($nid);
                 break;
+            case CoverType::Live:
+                $spiderURL = SpiderURLGenerator::lvCoverInfoURLByLID($nid);
+                break;
+            default:
+                return null;
         }
 
         $json = file_get_contents($spiderURL);
