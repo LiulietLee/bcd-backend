@@ -50,7 +50,7 @@ class SearchResultController extends AbstractController {
         }
 
         $result = $hacker->getCoverByTypeAndNID($type, $nid, $content);
-        if ($result) {
+        if (!property_exists($result, "error")) {
             if (!$record) {
                 $record = $this->coverRecordRepository()->create($type, $result->getURL(), $nid, $result->getTitle(), $result->getAuthor());
                 $this->insert($record);
@@ -62,6 +62,7 @@ class SearchResultController extends AbstractController {
                 'coverURL' => $result->getURL(),
             ));
         } else {
+            // TODO error code
             throw $this->createNotFoundException('找不到封面呢……');
         }
     }

@@ -14,7 +14,7 @@ class CoverHacker {
      * @param string $id
      * @return SearchResult|null
      */
-    public function getCoverByTypeAndNID(int $type, int $nid, string $id = ""): ?SearchResult {
+    public function getCoverByTypeAndNID(int $type, int $nid, string $id = "") {
         $spiderURL = null;
         switch ($type) {
             case CoverType::Video:
@@ -35,7 +35,7 @@ class CoverHacker {
         $jsonData->id = $id;
 
         if (property_exists($jsonData, "error")) {
-            return $jsonData->reason;
+            return $jsonData;
         }
 
         $result = new SearchResult($jsonData);
