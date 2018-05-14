@@ -9,11 +9,24 @@ use App\Entity\CoverRecord;
 class AbstractController extends Controller {
 
     /**
-     * @param $newRecord
+     * @param CoverRecord $newRecord
      */
-    protected function insert($newRecord) {
-        $entityManager = $this->getDoctrine()->getManager();
+    protected function insert(CoverRecord $newRecord) {
+        $entityManager = $this->entityManager();
         $entityManager->persist($newRecord);
+        $entityManager->flush();
+    }
+
+    /**
+     * @param CoverRecord $record
+     */
+    protected function update(CoverRecord $record) {
+        $count = $record->getDownloadCount();
+        $record->setDownloadCount($count + 1);
+        $zone = new \DateTimeZone("	Asia/Shanghai");
+        $timeInterface = new \DateTime("now", $zone);
+        $record->setTitle($timeInterface);
+        $entityManager = $this->entityManager();
         $entityManager->flush();
     }
 

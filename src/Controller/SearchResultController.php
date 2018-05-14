@@ -33,9 +33,7 @@ class SearchResultController extends AbstractController {
 
         $record = $this->coverRecordRepository()->findOnyByTypeAndNID($type, $nid);
         if ($record) {
-            $count = $record->getDownloadCount();
-            $record->setDownloadCount($count + 1);
-            $this->entityManager()->flush();
+            $this->update($record);
 
             $result = new \stdClass();
             $result->title = $record->getTitle();
