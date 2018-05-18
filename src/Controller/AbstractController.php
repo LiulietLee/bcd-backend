@@ -23,7 +23,7 @@ class AbstractController extends Controller {
     protected function update(CoverRecord $record) {
         $count = $record->getDownloadCount();
         $record->setDownloadCount($count + 1);
-        $zone = new \DateTimeZone("	Asia/Shanghai");
+        $zone = new \DateTimeZone("Asia/Shanghai");
         $timeInterface = new \DateTime("now", $zone);
         $record->setTitle($timeInterface);
         $entityManager = $this->entityManager();
