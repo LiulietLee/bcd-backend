@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Entity\CoverRecord;
 use App\Entity\SearchResult;
 use App\Type\CoverType;
 use App\Model\SpiderURLGenerator;
@@ -11,10 +12,9 @@ class CoverHacker {
     /**
      * @param int $type
      * @param int $nid
-     * @param string $id
      * @return SearchResult|null
      */
-    public function getCoverByTypeAndNID(int $type, int $nid, string $id = "") {
+    public function getCoverByTypeAndNID(int $type, int $nid) {
         $spiderURL = null;
         switch ($type) {
             case CoverType::Video:
@@ -32,7 +32,7 @@ class CoverHacker {
 
         $json = file_get_contents($spiderURL);
         $jsonData = json_decode($json);
-        $jsonData->id = $id;
+        $jsonData->id = CoverRecord::getStringIDByTypeAndNID($type, $nid);
 
         if (property_exists($jsonData, "error")) {
             return $jsonData;

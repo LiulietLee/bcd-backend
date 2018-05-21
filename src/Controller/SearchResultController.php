@@ -29,7 +29,6 @@ class SearchResultController extends AbstractController {
         }
 
         $nid = substr($content, 2, strlen($content) - 2);
-        $hacker = new CoverHacker();
 
         $record = $this->coverRecordRepository()->findOnyByTypeAndNID($type, $nid);
         if ($record) {
@@ -47,7 +46,7 @@ class SearchResultController extends AbstractController {
             ));
         }
 
-        $result = $hacker->getCoverByTypeAndNID($type, $nid, $content);
+        $result = $this->getCover($type, $nid);
         if (!property_exists($result, "error")) {
             if (!$record) {
                 $record = $this->coverRecordRepository()->create($type, $result->getURL(), $nid, $result->getTitle(), $result->getAuthor());

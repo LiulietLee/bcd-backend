@@ -141,6 +141,25 @@ class CoverRecord
         return $this;
     }
 
+    public static function getStringIDByTypeAndNID(int $type, int $nid): ?string {
+        $id = "";
+        switch ($type) {
+            case CoverType::Video:
+                $id .= "av";
+                break;
+            case CoverType::Article:
+                $id .= "cv";
+                break;
+            case CoverType::Live:
+                $id .= "lv";
+                break;
+            default:
+                return null;
+        }
+        $id .= $nid;
+        return $id;
+    }
+
     public function getStringID(): ?string {
         $id = "";
         switch ($this->type) {

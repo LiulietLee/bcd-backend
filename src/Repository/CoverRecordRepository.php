@@ -57,8 +57,7 @@ class CoverRecordRepository extends ServiceEntityRepository
     public function create(int $type, string $url, int $nid, string $title, string $author) {
         $record = new CoverRecord();
 
-        $zone = new \DateTimeZone("	Asia/Shanghai");
-        $timeInterface = new \DateTime("now", $zone);
+        $timeInterface = new \DateTime();
         $record->setTime($timeInterface);
         $record->setType($type);
         $record->setURL($url);
