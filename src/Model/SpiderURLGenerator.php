@@ -4,7 +4,7 @@ namespace App\Model;
 
 class SpiderURLGenerator {
 
-    private static $baseURL = "https://bilibilicd.vapor.cloud";
+    private static $baseURL = "https://bilibilicd.herokuapp.com";
 
     static function avCoverInfoURLByAID(int $aid): string {
         $fullURL = self::$baseURL. "/av/info/$aid";
