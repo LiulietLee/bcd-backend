@@ -45,7 +45,13 @@ class SearchController extends AbstractController {
             } else {
                 $hackResult = $this->getCover($type, $nid);
                 if (!property_exists($hackResult, "error")) {
-                    $record = $this->coverRecordRepository()->create($type, $hackResult->getURL(), $nid, $hackResult->getTitle(), $hackResult->getAuthor());
+                    $record = $this->coverRecordRepository()->create(
+                        $type,
+                        $hackResult->getURL(),
+                        $nid,
+                        $hackResult->getTitle(),
+                        $hackResult->getAuthor()
+                    );
                     $this->insert($record);
 
                     $response = new Response(json_encode($hackResult->stdClass()));
