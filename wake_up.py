@@ -17,10 +17,5 @@ elif minute == 30:
 else:
     sys.exit()
 
-url += "/av/info/" + str(random.randint(1, 100000))
-# print(url)
-
-import urllib.request
-contents = urllib.request.urlopen(url).read()
-
-# print(contents)
+from subprocess import call
+call(["curl", url])
