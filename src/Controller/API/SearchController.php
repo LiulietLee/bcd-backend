@@ -3,7 +3,6 @@
 namespace App\Controller\API;
 
 use App\Controller\AbstractController;
-use App\Model\CoverHacker;
 use App\Type\CoverType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +28,7 @@ class SearchController extends AbstractController {
 
             $response = new Response(json_encode($result));
         } else {
-            $record = $this->coverRecordRepository()->findOnyByTypeAndNID($type, $nid);
+            $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
 
             if ($record) {
                 $count = $record->getDownloadCount();
@@ -43,7 +42,7 @@ class SearchController extends AbstractController {
 
                 $response = new Response(json_encode($result));
             } else {
-                $hackResult = $this->getCover($type, $nid);
+                $hackResult = $this->getCoverFromCoverHacker($type, $nid);
                 if (!property_exists($hackResult, "error")) {
                     $record = $this->coverRecordRepository()->create(
                         $type,

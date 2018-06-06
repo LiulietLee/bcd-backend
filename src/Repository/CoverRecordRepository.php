@@ -26,6 +26,7 @@ class CoverRecordRepository extends ServiceEntityRepository
      * @return CoverRecord[]
      */
     public function findByTypeAfterTime(?int $type = null, int $time, int $limit = 10) {
+        // TODO: there is a bug here, probably.
         $qb = $this->createQueryBuilder('p');
         $qb->andWhere('p.time > :time')->setParameter('time', $time);
         if ($type) $qb->andWhere('p.type = :type')->setParameter('type', $type);
@@ -42,7 +43,7 @@ class CoverRecordRepository extends ServiceEntityRepository
      * @param int $nid
      * @return CoverRecord|null
      */
-    public function findOnyByTypeAndNID(int $type, int $nid) {
+    public function findOneByTypeAndNID(int $type, int $nid) {
         return $this->findOneBy(['type' => $type, 'nid' => $nid]);
     }
 

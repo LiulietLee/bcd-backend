@@ -28,8 +28,10 @@ php bin/console server:run
 
 ## API List
 ```
-.../api/search?type=$stringType&nid=$numberID
-.../api/hot_list
+/api/search?type=[stringType]&nid=[numberID]
+/api/hot_list
+/api/db/search?type=[stringType]&nid=[numberID]
+/api/db/update?type=[stringType]&nid=[numberID]&url=[coverURL]&title=[videoTitle]&author=[authorName]
 ```
 
 ## Cover Spider

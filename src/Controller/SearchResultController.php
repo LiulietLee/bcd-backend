@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\CoverRecord;
 use App\Controller\AbstractController;
 use App\Type\CoverType;
 use App\Model\CoverHacker;
@@ -30,7 +29,7 @@ class SearchResultController extends AbstractController {
 
         $nid = substr($content, 2, strlen($content) - 2);
 
-        $record = $this->coverRecordRepository()->findOnyByTypeAndNID($type, $nid);
+        $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
         if ($record) {
             $this->update($record);
 
@@ -46,7 +45,7 @@ class SearchResultController extends AbstractController {
             ));
         }
 
-        $result = $this->getCover($type, $nid);
+        $result = $this->getCoverFromCoverHacker($type, $nid);
         if (!property_exists($result, "error")) {
             if (!$record) {
                 $record = $this->coverRecordRepository()->create($type, $result->getURL(), $nid, $result->getTitle(), $result->getAuthor());

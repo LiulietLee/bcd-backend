@@ -32,7 +32,7 @@ class AbstractController extends Controller {
         $previousSearchingTime = $record->getTime();
         $interval = $timeInterface->getTimestamp() - $previousSearchingTime->getTimestamp();
         if ($interval > 24 * 60 * 60) {
-            $newCover = $this->getCover($record->getType(), $record->getNID());
+            $newCover = $this->getCoverFromCoverHacker($record->getType(), $record->getNID());
             if (!property_exists($newCover, "error")) {
                 $this->entityManager()->remove($record);
                 $this->entityManager()->flush();
@@ -60,7 +60,7 @@ class AbstractController extends Controller {
      * @param int $nid
      * @return \App\Entity\SearchResult|null
      */
-    protected function getCover(int $type, int $nid) {
+    protected function getCoverFromCoverHacker(int $type, int $nid) {
         $hacker = new CoverHacker();
         $result = $hacker->getCoverByTypeAndNID($type, $nid);
         return $result;
