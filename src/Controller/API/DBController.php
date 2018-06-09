@@ -18,12 +18,12 @@ class DBController extends AbstractController {
      * @return Response
      */
     function updateRecord(Request $request) {
-        $typeString = $request->query->get("type");
+        $typeString = $request->request->get("type");
         $type = CoverType::typeFromString($typeString);
-        $nid = $request->query->get("nid");
-        $url = $request->query->get("url");
-        $title = $request->query->get("title");
-        $author = $request->query->get("author");
+        $nid = $request->request->get("nid");
+        $url = $request->request->get("url");
+        $title = $request->request->get("title");
+        $author = $request->request->get("author");
 
         $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
         if ($request) {
@@ -40,7 +40,7 @@ class DBController extends AbstractController {
             $this->insert($record);
         }
 
-        $response = new Response(json_encode(["message" => "OK"]));
+        $response = new Response(json_encode(["status" => 200, "message" => "OK"]));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
