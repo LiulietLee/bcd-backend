@@ -18,29 +18,38 @@ class DBController extends AbstractController {
      * @return Response
      */
     function updateRecord(Request $request) {
-        $typeString = $request->request->get("type");
-        $type = CoverType::typeFromString($typeString);
-        $nid = $request->request->get("nid");
-        $url = $request->request->get("url");
-        $title = $request->request->get("title");
-        $author = $request->request->get("author");
+        $content = $request->getContent();
+        if (!empty($content)) {
+            $params = json_decode($content, true);
 
-        $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
-        if ($request) {
-            $timeInterface = new \DateTime();
-            $count = $record->getDownloadCount();
-            $record->setDownloadCount($count + 1);
-            $record->setTime($timeInterface);
-            $record->setTitle($title);
-            $record->setAuthor($author);
-            $record->setURL($url);
-            $this->entityManager()->flush();
+            $typeString = $params["type"];
+            $type = CoverType::typeFromString($typeString);
+            $nid = $params["nid"];
+            $url = $params["url"];
+            $title = $params["title"];
+            $author = $params["author"];
+
+            $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
+            if ($record) {
+                $timeInterface = new \DateTime();
+                $count = $record->getDownloadCount();
+                $record->setDownloadCount($count + 1);
+                $record->setTime($timeInterface);
+                $record->setTitle($title);
+                $record->setAuthor($author);
+                $record->setURL($url);
+                $this->entityManager()->flush();
+            } else {
+                $record = $this->coverRecordRepository()->create($type, $url, $nid, $title, $author);
+                $this->insert($record);
+            }
+
+            $result = ["status" => 200, "message" => "OK"];
         } else {
-            $record = $this->coverRecordRepository()->create($type, $url, $nid, $title, $author);
-            $this->insert($record);
+            $result = ["status" => 500, "message" => "empty content"];
         }
 
-        $response = new Response(json_encode(["status" => 200, "message" => "OK"]));
+        $response = new Response(json_encode($result));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
