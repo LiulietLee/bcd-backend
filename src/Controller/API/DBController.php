@@ -28,22 +28,9 @@ class DBController extends AbstractController {
             $url = $params["url"];
             $title = $params["title"];
             $author = $params["author"];
+            $stringID = CoverType::typeToStringWithTypeAndNID($type, $nid);
 
-            $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
-            if ($record) {
-                $timeInterface = new \DateTime();
-                $count = $record->getDownloadCount();
-                $record->setDownloadCount($count + 1);
-                $record->setTime($timeInterface);
-                $record->setTitle($title);
-                $record->setAuthor($author);
-                $record->setURL($url);
-                $this->entityManager()->flush();
-            } else {
-                $record = $this->coverRecordRepository()->create($type, $url, $nid, $title, $author);
-                $this->insert($record);
-            }
-
+            $this->updateOrCreateCoverBy($stringID, $title, $url, $author);
             $result = ["status" => 200, "message" => "OK"];
         } else {
             $result = ["status" => 500, "message" => "empty content"];
@@ -64,7 +51,8 @@ class DBController extends AbstractController {
         $typeString = $request->query->get("type");
         $type = CoverType::typeFromString($typeString);
         $nid = $request->query->get("nid");
-        $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
+        $stringID = CoverType::typeToStringWithTypeAndNID($type, $nid);
+        $record = $this->getCoverFromDB($stringID);
 
         if ($record) {
             $result = new \stdClass();

@@ -19,6 +19,7 @@ class SearchController extends AbstractController {
         $typeString = $request->query->get("type");
         $nid = $request->query->get("nid");
         $type = CoverType::typeFromString($typeString);
+        $stringID = CoverType::typeToStringWithTypeAndNID($type, $nid);
 
         if (!$nid || !$type) {
             $result = [
@@ -28,30 +29,27 @@ class SearchController extends AbstractController {
 
             $response = new Response(json_encode($result));
         } else {
-            $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
+            $cover = $this->getCoverFromDB($stringID);
 
-            if ($record) {
-                $count = $record->getDownloadCount();
-                $record->setDownloadCount($count + 1);
-                $this->entityManager()->flush();
+            if ($cover) {
+                $this->insertRecord($stringID);
 
                 $result = new \stdClass();
-                $result->title = $record->getTitle();
-                $result->author = $record->getAuthor();
-                $result->url = $record->getURL();
+                $result->title = $cover->getTitle();
+                $result->author = $cover->getAuthor();
+                $result->url = $cover->getURL();
 
                 $response = new Response(json_encode($result));
             } else {
                 $hackResult = $this->getCoverFromCoverHacker($type, $nid);
                 if (!property_exists($hackResult, "error")) {
-                    $record = $this->coverRecordRepository()->create(
-                        $type,
+                    $cover = $this->coverRepository()->create(
+                        $stringID,
                         $hackResult->getURL(),
-                        $nid,
                         $hackResult->getTitle(),
                         $hackResult->getAuthor()
                     );
-                    $this->insert($record);
+                    $this->updateOrCreateCover($cover);
 
                     $response = new Response(json_encode($hackResult->stdClass()));
                 } else {

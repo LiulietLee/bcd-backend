@@ -12,12 +12,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class AbstractController extends Controller {
 
     /**
+     * @param Cover $cover
+     */
+    public function updateOrCreateCover(Cover $cover) {
+        $this->updateOrCreateCoverBy(
+            $cover->getStringID(),
+            $cover->getTitle(),
+            $cover->getURL(),
+            $cover->getAuthor()
+        );
+    }
+    /**
      * @param string $stringID
      * @param string $title
      * @param string $url
      * @param string $author
      */
-    protected function updateOrCreateCover(string $stringID, string $title, string $url, string $author) {
+    protected function updateOrCreateCoverBy(string $stringID, string $title, string $url, string $author) {
         $cover = $this->coverRepository()->findOneByStringID($stringID);
         if ($cover) {
             $cover->setURL($url);
@@ -43,7 +54,7 @@ class AbstractController extends Controller {
     /**
      * @param string $stringID
      */
-    private function insertRecord(string $stringID) {
+    protected function insertRecord(string $stringID) {
         $newRecord = $this->recordRepository()->create($stringID);
         $this->entityManager()->persist($newRecord);
         $this->entityManager()->flush();

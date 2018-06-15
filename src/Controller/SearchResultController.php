@@ -29,9 +29,9 @@ class SearchResultController extends AbstractController {
 
         $nid = substr($content, 2, strlen($content) - 2);
 
-        $record = $this->coverRecordRepository()->findOneByTypeAndNID($type, $nid);
+        $record = $this->getCoverFromDB($content);
         if ($record) {
-            $this->update($record);
+            $this->updateOrCreateCover($record);
 
             $result = new \stdClass();
             $result->title = $record->getTitle();
@@ -48,8 +48,13 @@ class SearchResultController extends AbstractController {
         $result = $this->getCoverFromCoverHacker($type, $nid);
         if (!property_exists($result, "error")) {
             if (!$record) {
-                $record = $this->coverRecordRepository()->create($type, $result->getURL(), $nid, $result->getTitle(), $result->getAuthor());
-                $this->insert($record);
+                $record = $this->coverRepository()->create(
+                    $content,
+                    $result->getURL(),
+                    $result->getTitle(),
+                    $result->getAuthor()
+                );
+                $this->updateOrCreateCover($record);
             }
 
             return $this->render('result.html.twig', array(

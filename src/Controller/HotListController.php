@@ -15,7 +15,7 @@ class HotListController extends AbstractController {
      * @return Response
      */
     public function index() {
-        $result = $this->coverRecordRepository()->findByTypeAfterTime(CoverType::Null, time() - 7 * 24 * 60 * 60);
+        $result = $this->getHotList();
 
         $list = Array();
         foreach ($result as $item) {
@@ -25,7 +25,6 @@ class HotListController extends AbstractController {
             $listItem->author = $item->getAuthor();
             $listItem->title = $item->getTitle();
             $listItem->url = $item->getURL();
-            $listItem->count = $item->getDownloadCount();
 
             $list[] = $listItem;
         }
