@@ -3,56 +3,73 @@
 namespace App\Controller;
 
 use App\Model\CoverHacker;
-use App\Repository\CoverRecordRepository;
+use App\Entity\Cover;
+use App\Entity\Record;
+use App\Repository\CoverRepository;
+use App\Repository\RecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use App\Entity\CoverRecord;
 
 class AbstractController extends Controller {
 
     /**
-     * @param CoverRecord $newRecord
+     * @param string $stringID
+     * @param string $title
+     * @param string $url
+     * @param string $author
      */
-    protected function insert(CoverRecord $newRecord) {
-        $entityManager = $this->entityManager();
-        $entityManager->persist($newRecord);
-        $entityManager->flush();
+    protected function updateOrCreateCover(string $stringID, string $title, string $url, string $author) {
+        $cover = $this->coverRepository()->findOneByStringID($stringID);
+        if ($cover) {
+            $cover->setURL($url);
+            $cover->setAuthor($author);
+            $cover->setTitle($title);
+        } else {
+            $cover = $this->coverRepository()->create($stringID, $url, $title, $author);
+        }
+        $this->insertRecord($stringID);
+        $this->entityManager()->persist($cover);
+        $this->entityManager()->flush();
     }
 
     /**
-     * 如果发现上次下载是在一天之前则再次下载更新数据并返回 true。
-     * 如果上次下载是在一天之内或者发现视频封面无法获取则返回 false 并更新下载次数与时间。
-     *
-     * @param CoverRecord $record
-     * @return Bool
+     * @param string $stringID
+     * @return Cover|null
      */
-    protected function update(CoverRecord $record): Bool {
-        $count = $record->getDownloadCount();
-        $timeInterface = new \DateTime();
+    protected function getCoverFromDB(string $stringID) {
+        $this->insertRecord($stringID);
+        return $this->coverRepository()->findOneByStringID($stringID);
+    }
 
-        $previousSearchingTime = $record->getTime();
-        $interval = $timeInterface->getTimestamp() - $previousSearchingTime->getTimestamp();
-        if ($interval > 24 * 60 * 60) {
-            $newCover = $this->getCoverFromCoverHacker($record->getType(), $record->getNID());
-            if (!property_exists($newCover, "error")) {
-                $this->entityManager()->remove($record);
-                $this->entityManager()->flush();
-                $record = $this->coverRecordRepository()->create(
-                    $record->getType(),
-                    $newCover->getURL(),
-                    $record->getNID(),
-                    $newCover->getTitle(),
-                    $newCover->getAuthor()
-                );
-                $record->setDownloadCount($count + 1);
-                $this->insert($record);
-                return true;
+    /**
+     * @param string $stringID
+     */
+    private function insertRecord(string $stringID) {
+        $newRecord = $this->recordRepository()->create($stringID);
+        $this->entityManager()->persist($newRecord);
+        $this->entityManager()->flush();
+    }
+
+    /**
+     * @return Cover[]
+     */
+    protected function getHotList() {
+        $recordList = $this->recordRepository()->findRecordsAfterTime(time() - 7 * 24 * 60);
+        $countList = [];
+        foreach ($recordList as $record) {
+            if (array_key_exists($record->getStringID(), $countList)) {
+                $countList[$record->getStringID()]++;
+            } else {
+                $countList[$record->getStringID()] = 1;
             }
         }
-
-        $record->setDownloadCount($count + 1);
-        $record->setTime($timeInterface);
-        $this->entityManager()->flush();
-        return false;
+        sort($countList, SORT_DESC);
+        $covers = [];
+        $coverRepository = $this->coverRepository();
+        foreach($countList as $key => $value) {
+            $cover = $coverRepository->findOneByStringID($key);
+            $covers[] = $cover;
+        }
+        return $covers;
     }
 
     /**
@@ -74,10 +91,17 @@ class AbstractController extends Controller {
     }
 
     /**
-     * @return CoverRecordRepository
+     * @return CoverRepository
      */
-    protected function coverRecordRepository(): CoverRecordRepository {
-        return $this->getDoctrine()->getRepository(CoverRecord::class);
+    protected function coverRepository(): CoverRepository {
+        return $this->getDoctrine()->getRepository(Cover::class);
+    }
+
+    /**
+     * @return RecordRepository
+     */
+    protected function recordRepository(): RecordRepository {
+        return $this->getDoctrine()->getRepository(Record::class);
     }
 
 }

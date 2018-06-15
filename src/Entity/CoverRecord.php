@@ -6,6 +6,7 @@ use App\Type\CoverType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @deprecated
  * @ORM\Entity(repositoryClass="App\Repository\CoverRecordRepository")
  */
 class CoverRecord

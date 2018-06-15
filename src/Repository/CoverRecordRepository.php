@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
+ * @deprecated
  * @method CoverRecord|null find($id, $lockMode = null, $lockVersion = null)
  * @method CoverRecord|null findOneBy(array $criteria, array $orderBy = null)
  * @method CoverRecord[]    findAll()
