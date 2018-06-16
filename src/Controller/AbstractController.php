@@ -37,7 +37,7 @@ class AbstractController extends Controller {
         } else {
             $cover = $this->coverRepository()->create($stringID, $url, $title, $author);
         }
-        $this->insertRecord($stringID);
+        $this->insertRecord($cover);
         $this->entityManager()->persist($cover);
         $this->entityManager()->flush();
     }
@@ -47,15 +47,18 @@ class AbstractController extends Controller {
      * @return Cover|null
      */
     protected function getCoverFromDB(string $stringID) {
-        $this->insertRecord($stringID);
-        return $this->coverRepository()->findOneByStringID($stringID);
+        $cover = $this->coverRepository()->findOneByStringID($stringID);
+        if ($cover) {
+            $this->insertRecord($cover);
+        }
+        return $cover;
     }
 
     /**
-     * @param string $stringID
+     * @param Cover $cover
      */
-    protected function insertRecord(string $stringID) {
-        $newRecord = $this->recordRepository()->create($stringID);
+    protected function insertRecord(Cover $cover) {
+        $newRecord = $this->recordRepository()->create($cover->getStringID());
         $this->entityManager()->persist($newRecord);
         $this->entityManager()->flush();
     }
@@ -64,7 +67,9 @@ class AbstractController extends Controller {
      * @return Cover[]
      */
     protected function getHotList() {
-        $recordList = $this->recordRepository()->findRecordsAfterTime(time() - 7 * 24 * 60);
+        $pastDatetime = new \DateTime();
+        $pastDatetime->setTimestamp(strtotime("-1 week"));
+        $recordList = $this->recordRepository()->findRecordsAfterTime($pastDatetime);
         $countList = [];
         foreach ($recordList as $record) {
             if (array_key_exists($record->getStringID(), $countList)) {
@@ -73,12 +78,16 @@ class AbstractController extends Controller {
                 $countList[$record->getStringID()] = 1;
             }
         }
-        sort($countList, SORT_DESC);
+        arsort($countList);
         $covers = [];
         $coverRepository = $this->coverRepository();
-        foreach($countList as $key => $value) {
-            $cover = $coverRepository->findOneByStringID($key);
+        $counter = 0;
+        foreach($countList as $index => $value) {
+            $cover = $coverRepository->findOneByStringID($index);
             $covers[] = $cover;
+            if (++$counter > 10) {
+                break;
+            }
         }
         return $covers;
     }

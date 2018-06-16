@@ -21,10 +21,10 @@ class HotListController extends AbstractController {
         foreach ($result as $item) {
             $listItem = new \stdClass();
 
-            $listItem->id = $item->getStringID();
-            $listItem->author = $item->getAuthor();
-            $listItem->title = $item->getTitle();
             $listItem->url = $item->getURL();
+            $listItem->author = $item->getAuthor();
+            $listItem->id = $item->getStringID();
+            $listItem->title = $item->getTitle();
 
             $list[] = $listItem;
         }

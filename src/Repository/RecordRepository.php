@@ -20,10 +20,10 @@ class RecordRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $time
+     * @param \DateTime $time
      * @return Record[]
      */
-    public function findRecordsAfterTime(int $time) {
+    public function findRecordsAfterTime(\DateTime $time) {
         return $this->createQueryBuilder('p')
             ->where('p.time > :time')
             ->setParameter('time', $time)

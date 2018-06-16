@@ -21,6 +21,7 @@ class CoverRecordRepository extends ServiceEntityRepository
     }
 
     /**
+     * @deprecated
      * @param int|null $type
      * @param int $time
      * @param int $limit
@@ -39,6 +40,7 @@ class CoverRecordRepository extends ServiceEntityRepository
     }
 
     /**
+     * @deprecated
      * @param int $type
      * @param int $nid
      * @return CoverRecord|null
@@ -48,6 +50,7 @@ class CoverRecordRepository extends ServiceEntityRepository
     }
 
     /**
+     * @deprecated
      * @param int $type
      * @param string $url
      * @param int $nid
