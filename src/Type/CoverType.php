@@ -19,7 +19,7 @@ class CoverType {
         }
     }
 
-    static function typeToStringWithTypeAndNID(int $type, int $nid): ?string {
+    static function getStringIDByTypeAndNID(int $type, int $nid): ?string {
         switch ($type) {
             case CoverType::Video:
                 $id = "av";

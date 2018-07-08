@@ -1,15 +1,24 @@
 <?php
 
-namespace App\Controller\API;
+namespace App\Controller;
 
-use App\Controller\AbstractController;
-use App\Entity\CoverRecord;
+use App\Manager\CoverManager;
 use App\Type\CoverType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DBController extends AbstractController {
+class DBController extends Controller {
+
+    /**
+     * @var CoverManager
+     */
+    private $coverManager;
+
+    public function __construct(CoverManager $coverManager) {
+        $this->coverManager = $coverManager;
+    }
 
     /**
      * @Route("api/db/update", name="DBUpdate")
@@ -28,9 +37,9 @@ class DBController extends AbstractController {
             $url = $params["url"];
             $title = $params["title"];
             $author = $params["author"];
-            $stringID = CoverType::typeToStringWithTypeAndNID($type, $nid);
+            $stringID = CoverType::getStringIDByTypeAndNID($type, $nid);
 
-            $this->updateOrCreateCoverBy($stringID, $title, $url, $author);
+            $this->coverManager->updateOrCreateCoverBy($stringID, $title, $url, $author);
             $result = ["status" => 200, "message" => "OK"];
         } else {
             $result = ["status" => 500, "message" => "empty content"];
@@ -51,8 +60,8 @@ class DBController extends AbstractController {
         $typeString = $request->query->get("type");
         $type = CoverType::typeFromString($typeString);
         $nid = $request->query->get("nid");
-        $stringID = CoverType::typeToStringWithTypeAndNID($type, $nid);
-        $record = $this->getCoverFromDB($stringID);
+        $stringID = CoverType::getStringIDByTypeAndNID($type, $nid);
+        $record = $this->coverManager->getCoverFromDB($stringID);
 
         if ($record) {
             $result = new \stdClass();

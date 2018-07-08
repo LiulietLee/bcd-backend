@@ -32,7 +32,7 @@ class CoverHacker {
 
         $json = file_get_contents($spiderURL);
         $jsonData = json_decode($json);
-        $jsonData->id = CoverRecord::getStringIDByTypeAndNID($type, $nid);
+        $jsonData->stringID = CoverType::getStringIDByTypeAndNID($type, $nid);
 
         if (property_exists($jsonData, "error")) {
             return $jsonData;

@@ -88,4 +88,12 @@ class Cover
 
         return $this;
     }
+
+    public function stdClass(): \stdClass {
+        $result = new \stdClass();
+        $result->title = $this->getTitle();
+        $result->author = $this->getAuthor();
+        $result->url = $this->getURL();
+        return $result;
+    }
 }
