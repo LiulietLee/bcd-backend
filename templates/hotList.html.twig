@@ -1,15 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Hot list</title>
+    <title>七日热门 - BCD</title>
+    <style>
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            box-sizing: border-box;
+            padding: 0 10px;
+            background: #f25d8e;
+        }
+
+        @-moz-document url-prefix() {
+            nav {
+                padding-top: 10px;
+            }
+        }
+
+        nav>a {
+            text-decoration: none;
+            color: white;
+            font-size: 30px;
+        }
+
+        h1 {
+            margin-top: 70px;
+            font-size: 3em;
+        }
+
+        section {
+            margin: 10px;
+            overflow: hidden;
+            word-break: break-all;
+        }
+
+        figure {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        section>div {
+            height: 200px;
+        }
+
+        h2 {
+            color: #f25d8e;
+        }
+
+        h3 {
+            margin: 10px 0;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        @media (orientation: landscape) {
+            nav>a:last-child {
+                display: none;
+            }
+
+            section {
+                height: 200px;
+            }
+
+            figure {
+                width: 320px;
+                height: 200px;
+                float: left;
+                margin-right: 10px;
+            }
+
+            @media (max-width: 1000px) {
+                h2 {
+                    float: left;
+                    position: absolute;
+                    margin: 10px;
+                    background-color: rgba(255, 255, 255, 0.8);
+                    padding: 2px 7px;
+                    border-radius: 5px;
+                }
+            }
+        }
+
+        @media (orientation: portrait) {
+            header {
+                position: sticky;
+                position: -webkit-sticky;
+                top: 0;
+                height: 50px;
+                margin: -10px;
+                margin-bottom: 10px;
+            }
+
+            nav>a:first-child {
+                display: none;
+            }
+
+            #title {
+                position: absolute;
+                top: -70px;
+                left: 50%;
+            }
+
+            h1 {
+                position: relative;
+                left: -50%;
+                color: white;
+                text-align: center;
+                font-size: 2em;
+            }
+        }
+    </style>
 </head>
     <body>
+        <header>
+            <nav>
+                <a href="/">BilibiliCD</a>
+                <a href="/">&lsaquo; BCD</a>
+            </nav>
+            <div id="title">
+                <h1>七日热门</h1>
+            </div>
+        </header>
         {% for item in list %}
-            <h2>{{ item.id }}</h2>
-            <h3>标题：{{ item.title }}</h3>
-            <p>UP主：{{ item.author }}</p>
-            <p>封面链接：{{ item.url }}</p>
+        <section>
+            <figure>
+                <img src="{{ item.url }}" alt="{{ item.title }}">
+            </figure>
+            <div>
+                <h2>{{ item.id }}</h2>
+                <h3>标题：{{ item.title }}</h3>
+                <p>UP主：{{ item.author }}</p>
+                <p>封面链接：{{ item.url }}</p>
+            </div>
+        </section>
         {% endfor %}
     </body>
 </html>
