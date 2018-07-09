@@ -1,15 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Hot list</title>
+    <title>七日热门 - BCD</title>
+    <style>
+        section {
+            margin: 10px;
+            overflow: hidden;
+            word-break: break-all;
+        }
+
+        figure {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        div {
+            height: 200px;
+        }
+
+        h2 {
+            color: #f25d8e;
+        }
+
+        h3 {
+            margin: 10px 0;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        @media (orientation: landscape) {
+            section {
+                height: 200px;
+            }
+
+            figure {
+                width: 320px;
+                height: 200px;
+                float: left;
+                margin-right: 10px;
+            }
+
+            @media (max-width: 1000px) {
+                h2 {
+                    float: left;
+                    position: absolute;
+                    margin: 10px;
+                    background-color: rgba(255, 255, 255, 0.8);
+                    padding: 2px 7px;
+                    border-radius: 5px;
+                }
+            }
+        }
+    </style>
 </head>
     <body>
         {% for item in list %}
-            <h2>{{ item.id }}</h2>
-            <h3>标题：{{ item.title }}</h3>
-            <p>UP主：{{ item.author }}</p>
-            <p>封面链接：{{ item.url }}</p>
+        <section>
+            <figure>
+                <img src="{{ item.url }}" alt="{{ item.title }}">
+            </figure>
+            <div>
+                <h2>{{ item.id }}</h2>
+                <h3>标题：{{ item.title }}</h3>
+                <p>UP主：{{ item.author }}</p>
+                <p>封面链接：{{ item.url }}</p>
+            </div>
+        </section>
         {% endfor %}
     </body>
 </html>
