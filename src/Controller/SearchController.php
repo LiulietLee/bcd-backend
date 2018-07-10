@@ -37,7 +37,7 @@ class SearchController extends Controller {
      */
     public function index(string $content) {
         if (strlen($content) < 3) {
-            throw $this->createAccessDeniedException('搜索内容太短啦！');
+            throw $this->createNotFoundException('搜索内容太短啦！');
         }
 
         $typeString = substr($content, 0, 2);

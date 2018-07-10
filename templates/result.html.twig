@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
+    <style>
+        iframe {
+            display: none;
+        }
+        img {
+            width: 100vh;
+        }
+    </style>
 </head>
 <body>
-<p>{{ title }}</p>
-<p>{{ author }}</p>
-<p>{{ coverURL }}</p>
+    <span id="noreferrer"></span>
+    <img src="{{ coverURL }}" alt="{{ title }}" rel="noreferrer">
+    <p>{{ title }}</p>
+    <p>{{ author }}</p>
+    <p>{{ coverURL }}</p>
+    <script src="Javascript/referrer-killer.js"></script>
+    <script>
+        document.getElementById('noreferrer').innerHTML = ReferrerKiller.imageHtml('{{ coverURL }}');
+    </script>
 </body>
 </html>
