@@ -1,23 +1,24 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <title>七日热门 - BCD</title>
+{% extends 'index.html.twig' %}
+
+{% block title %}七日热门 - BCD{% endblock %}
+
+{% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="/CSS/hot-list.css">
-</head>
-    <body>
-        <header>
-            <nav>
-                <a href="/">BilibiliCD</a>
-                <a href="/">&lsaquo; BCD</a>
-            </nav>
-            <div id="title">
-                <h1>七日热门</h1>
-            </div>
-        </header>
-        {% for item in list %}
-            <span id="noreferrer-{{ item.id }}"></span>
-            <section>
+{% endblock %}
+
+{% block body %}
+    <header>
+        <nav>
+            <a href="/">BilibiliCD</a>
+            <a href="/">&lsaquo; BCD</a>
+        </nav>
+        <div id="title">
+            <h1>七日热门</h1>
+        </div>
+    </header>
+    {% for item in list %}
+        <span id="noreferrer-{{ item.id }}"></span>
+        <section>
             <figure>
                 <img src="{{ item.url }}" alt="{{ item.title }}" rel="noreferrer">
             </figure>
@@ -28,12 +29,14 @@
                 <p>封面链接：{{ item.url }}</p>
             </div>
         </section>
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="Javascript/referrer-killer.js"></script>
+    <script>
+        {% for item in list %}
+        document.getElementById('noreferrer-{{ item.id }}').innerHTML = ReferrerKiller.imageHtml('{{ item.url }}');
         {% endfor %}
-        <script src="Javascript/referrer-killer.js"></script>
-        <script>
-            {% for item in list %}
-            document.getElementById('noreferrer-{{ item.id }}').innerHTML = ReferrerKiller.imageHtml('{{ item.url }}');
-            {% endfor %}
-        </script>
-    </body>
-</html>
+    </script>
+{% endblock %}
