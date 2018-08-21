@@ -49,13 +49,7 @@ class HotListController extends Controller {
 
         $list = Array();
         foreach ($result as $item) {
-            $listItem = new \stdClass();
-
-            $listItem->id = $item->getStringID();
-            $listItem->author = $item->getAuthor();
-            $listItem->title = $item->getTitle();
-            $listItem->url = $item->getURL();
-
+            $listItem = $item->stdClass();
             $list[] = $listItem;
         }
 

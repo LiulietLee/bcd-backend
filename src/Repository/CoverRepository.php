@@ -27,6 +27,29 @@ class CoverRepository extends ServiceEntityRepository
         return $this->findOneBy(['strid' =>  $stringID]);
     }
 
+
+    /**
+     * @param string|null $title
+     * @param string|null $author
+     * @param string|null $stringID
+     * @param int $offset
+     * @param int $limit
+     * @return Cover[]
+     */
+    public function findCoverByTitleAndAuthorAndStringID(
+        string $title = null,
+        string $author = null,
+        string $stringID = null,
+        int $offset = 0,
+        int $limit = 20
+    ): Array {
+        $para = [];
+        if ($title) $para["title"] = $title;
+        if ($author) $para["author"] = $author;
+        if ($stringID) $para["strid"] = $stringID;
+        return $this->findBy($para, ["strid" => "ASC"], $limit, $offset);
+    }
+
     /**
      * @param string $stringID
      * @param string $url
