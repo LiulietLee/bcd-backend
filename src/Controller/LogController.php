@@ -1,10 +1,15 @@
 <?php
 
+namespace App\Controller;
+
+use App\Entity\Cover;
 use App\Repository\CoverRepository;
 use App\Repository\RecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,15 +36,35 @@ class LogController extends Controller {
      * @return Response
      */
     public function coverLog(Request $request) {
-        $limit = $request->query->getInt("limit", 0);
-        $offset = $request->query->getInt("offset", 0);
-        if ($limit < 0 || $offset < 0) {
-            throw $this->createNotFoundException("出错了呢...");
+        $page = $request->query->getInt("page", 0);
+        $limit = 20;
+        $offset = $page * $limit;
+        if ($page < 0) {
+            $page = 0;
         }
 
-        $title = $request->request->get("title");
-        $author = $request->request->get("author");
-        $stringID = $request->request->get("stringID");
+        $searchContent = new Cover();
+        $form = $this->createFormBuilder($searchContent)
+            ->add('title', TextType::class, ['required' => false])
+            ->add('author', TextType::class, ['required' => false])
+            ->add('stringID', TextType::class, [
+                'label' => 'String ID',
+                'required' => false
+            ])
+            ->add('search', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Cover **/
+            $data = $form->getData();
+            $title = $data->getTitle();
+            $author = $data->getAuthor();
+            $stringID = $data->getStringID();
+        } else {
+            $title = $author = $stringID = null;
+        }
 
         $result = $this->coverRepository->findCoverByTitleAndAuthorAndStringID($title, $author, $stringID, $offset, $limit);
         $list = [];
@@ -49,6 +74,8 @@ class LogController extends Controller {
         }
 
         return $this->render('coverLog.html.twig', array(
+            'search' => $form->createView(),
+            'page' => $page,
             'list' => $list
         ));
     }

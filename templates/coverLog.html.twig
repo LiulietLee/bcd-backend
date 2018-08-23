@@ -1,0 +1,20 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Cover Log{% endblock %}
+
+{% block body %}
+    {{ form_start(search) }}
+    {{ form_widget(search) }}
+    {{ form_end(search) }}
+
+    <h3>page: {{ page }}</h3>
+    {% for item in list %}
+        <h5>{{ item.id }}</h5>
+        <h4>Title: {{ item.title }}</h4>
+        <p>Author: {{ item.author }}</p>
+        <p>URL: {{ item.url }}</p>
+    {% endfor %}
+
+    <a href="?page={{ page + 1 }}">next page</a>
+    <a href="?page={{ page - 1 }}">previous page</a>
+{% endblock %}

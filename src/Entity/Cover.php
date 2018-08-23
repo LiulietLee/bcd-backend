@@ -91,6 +91,7 @@ class Cover
 
     public function stdClass(): \stdClass {
         $result = new \stdClass();
+        $result->id = $this->getStringID();
         $result->title = $this->getTitle();
         $result->author = $this->getAuthor();
         $result->url = $this->getURL();
