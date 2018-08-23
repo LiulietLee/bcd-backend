@@ -58,10 +58,10 @@ class LogController extends Controller {
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Cover **/
-            $data = $form->getData();
-            $title = $data->getTitle();
-            $author = $data->getAuthor();
-            $stringID = $data->getStringID();
+            $searchContent = $form->getData();
+            $title = $searchContent->getTitle();
+            $author = $searchContent->getAuthor();
+            $stringID = $searchContent->getStringID();
         } else {
             $title = $author = $stringID = null;
         }
