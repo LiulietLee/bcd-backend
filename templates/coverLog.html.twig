@@ -3,10 +3,12 @@
 {% block title %}Cover Log{% endblock %}
 
 {% block body %}
-    {{ form_start(search) }}
-    {{ form_widget(search) }}
-    {{ form_end(search) }}
-
+    <form action="/log/cover" method="get">
+        Title <input type="text" name="title" title="video title">
+        Author <input type="text" name="author" title="video author">
+        String ID <input type="text" name="stringID" value="av" title="av number">
+        <input type="submit" value="Search">
+    </form>
     <h3>page: {{ page }}</h3>
     {% for item in list %}
         <h5>{{ item.id }}</h5>

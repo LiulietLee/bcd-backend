@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\SearchContent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,25 +16,16 @@ class IndexController extends Controller {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request) {
-        $searchContent = new SearchContent();
 
-        $form = $this->createFormBuilder($searchContent)
-            ->add('content', TextType::class)
-            ->add('search', SubmitType::class)
-            ->getForm();
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $content = $form->getData()->getContent();
-            if ($content != "") {
-                return $this->redirect("/$content");
+        $searchText = $request->request->get("searchText");
+        if ($searchText) {
+            if ($searchText != "") {
+                return $this->redirect("/$searchText");
             }
         }
 
-        return $this->render('index.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->render('index.html.twig', []);
     }
 
 }

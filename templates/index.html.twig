@@ -16,9 +16,10 @@
     <div id="toHotList">
         To hot list
     </div>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <form action="/" method="post">
+        av number <input type="text" name="searchText" value="av" title="av number">
+        <input type="submit" value="Search">
+    </form>
 {% endblock %}
 
 {% block javascripts %}

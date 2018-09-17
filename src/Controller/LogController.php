@@ -2,15 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Cover;
 use App\Repository\CoverRepository;
 use App\Repository\RecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LogController extends Controller {
@@ -43,28 +39,9 @@ class LogController extends Controller {
             $page = 0;
         }
 
-        $searchContent = new Cover();
-        $form = $this->createFormBuilder($searchContent)
-            ->add('title', TextType::class, ['required' => false])
-            ->add('author', TextType::class, ['required' => false])
-            ->add('stringID', TextType::class, [
-                'label' => 'String ID',
-                'required' => false
-            ])
-            ->add('search', SubmitType::class)
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Cover **/
-            $searchContent = $form->getData();
-            $title = $searchContent->getTitle();
-            $author = $searchContent->getAuthor();
-            $stringID = $searchContent->getStringID();
-        } else {
-            $title = $author = $stringID = null;
-        }
+        $title = $request->query->get("title");
+        $author = $request->query->get("author");
+        $stringID = $request->query->get("stringID");
 
         $result = $this->coverRepository->findCoverByTitleAndAuthorAndStringID($title, $author, $stringID, $offset, $limit);
         $list = [];
@@ -74,7 +51,6 @@ class LogController extends Controller {
         }
 
         return $this->render('coverLog.html.twig', array(
-            'search' => $form->createView(),
             'page' => $page,
             'list' => $list
         ));
