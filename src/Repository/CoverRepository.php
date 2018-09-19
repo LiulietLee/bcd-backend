@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Cover;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -27,7 +28,6 @@ class CoverRepository extends ServiceEntityRepository
         return $this->findOneBy(['strid' =>  $stringID]);
     }
 
-
     /**
      * @param string|null $title
      * @param string|null $author
@@ -48,6 +48,17 @@ class CoverRepository extends ServiceEntityRepository
         if ($author) $para["author"] = $author;
         if ($stringID) $para["strid"] = $stringID;
         return $this->findBy($para, ["strid" => "ASC"], $limit, $offset);
+    }
+
+    public function getCountOfAllCovers(): int {
+        $qb = $this->createQueryBuilder('u');
+        try {
+            return $qb->select("count(u.id)")
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch(NonUniqueResultException $e) {
+            return -1;
+        }
     }
 
     /**

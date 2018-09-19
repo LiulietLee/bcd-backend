@@ -33,10 +33,19 @@ class LogController extends Controller {
      */
     public function coverLog(Request $request) {
         $page = $request->query->getInt("page", 0);
-        $limit = 20;
-        $offset = $page * $limit;
         if ($page < 0) {
             $page = 0;
+        }
+        $limit = 20;
+        $offset = $page * $limit;
+        $count = $this->coverRepository->getCountOfAllCovers();
+        while ($offset >= $count) {
+            $offset -= $limit;
+            $page--;
+            if ($offset < 0) {
+                $page = $offset = 0;
+                break;
+            }
         }
 
         $title = $request->query->get("title");
@@ -54,6 +63,7 @@ class LogController extends Controller {
         $result = $this->coverRepository->findCoverByTitleAndAuthorAndStringID($title, $author, $stringID, $offset, $limit);
 
         return $this->render('coverLog.html.twig', array(
+            'count' => $count,
             'title' => $title,
             'author' => $author,
             'stringID' => $stringID,
