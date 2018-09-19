@@ -9,14 +9,20 @@
         String ID <input type="text" name="stringID" value="av" title="av number">
         <input type="submit" value="Search">
     </form>
+
     <h3>page: {{ page }}</h3>
     {% for item in list %}
-        <h5>{{ item.id }}</h5>
-        <h4>Title: {{ item.title }}</h4>
+        <h3>{{ item.id }}</h3>
+        <h4>{{ item.title }}</h4>
         <p>Author: {{ item.author }}</p>
         <p>URL: {{ item.url }}</p>
     {% endfor %}
 
-    <a href="?page={{ page + 1 }}">next page</a>
-    <a href="?page={{ page - 1 }}">previous page</a>
+    <form action="/log/cover" method="get">
+        <input type="hidden" name="title" value="{{ title }}">
+        <input type="hidden" name="author" value="{{ author }}">
+        <input type="hidden" name="stringID" value="{{ stringID }}">
+        <button type="submit" name="page" value="{{ page + 1 }}">next page</button>
+        <button type="submit" name="page" value="{{ page - 1 }}">previous page</button>
+    </form>
 {% endblock %}

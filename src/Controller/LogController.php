@@ -43,6 +43,14 @@ class LogController extends Controller {
         $author = $request->query->get("author");
         $stringID = $request->query->get("stringID");
 
+        $checkList = ["av", "cv", "lv"];
+        foreach ($checkList as $item) {
+            if ($stringID == $item) {
+                $stringID = null;
+                break;
+            }
+        }
+
         $result = $this->coverRepository->findCoverByTitleAndAuthorAndStringID($title, $author, $stringID, $offset, $limit);
         $list = [];
         foreach ($result as $item) {
@@ -51,6 +59,9 @@ class LogController extends Controller {
         }
 
         return $this->render('coverLog.html.twig', array(
+            'title' => $title,
+            'author' => $author,
+            'stringID' => $stringID,
             'page' => $page,
             'list' => $list
         ));
