@@ -27,6 +27,37 @@ class LogController extends Controller {
     }
 
     /**
+     * @Route("/log/record", name="recordLog")
+     * @param Request $request
+     * @return Response
+     */
+    public function recordLog(Request $request) {
+        $page = $request->query->getInt("page", 0);
+        if ($page < 0) {
+            $page = 0;
+        }
+        $limit = 20;
+        $offset = $page * $limit;
+        $count = $this->recordRepository->getCountOfAllRecords();
+        while ($offset >= $count) {
+            $offset -= $limit;
+            $page--;
+            if ($offset < 0) {
+                $offset = $page = 0;
+                break;
+            }
+        }
+
+        $result = $this->recordRepository->getRecord($offset, $limit);
+
+        return $this->render('recordLog.html.twig', array(
+            'count' => $count,
+            'page' => $page,
+            'list' => $result,
+        ));
+    }
+
+    /**
      * @Route("/log/cover", name="coverLog")
      * @param Request $request
      * @return Response

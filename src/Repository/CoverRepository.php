@@ -50,6 +50,9 @@ class CoverRepository extends ServiceEntityRepository
         return $this->findBy($para, ["strid" => "ASC"], $limit, $offset);
     }
 
+    /**
+     * @return int
+     */
     public function getCountOfAllCovers(): int {
         $qb = $this->createQueryBuilder('u');
         try {

@@ -23,7 +23,7 @@
         <input type="hidden" name="title" value="{{ title }}">
         <input type="hidden" name="author" value="{{ author }}">
         <input type="hidden" name="stringID" value="{{ stringID }}">
-        <button type="submit" name="page" value="{{ page + 1 }}">next page</button>
         <button type="submit" name="page" value="{{ page - 1 }}">previous page</button>
+        <button type="submit" name="page" value="{{ page + 1 }}">next page</button>
     </form>
 {% endblock %}

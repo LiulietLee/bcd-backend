@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Record;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -39,6 +40,20 @@ class RecordRepository extends ServiceEntityRepository
      */
     public function getRecord(int $offset, int $limit): Array {
         return $this->findBy([], ["id" => "ASC"], $limit, $offset);
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountOfAllRecords(): int {
+        $qb = $this->createQueryBuilder('u');
+        try {
+            return $qb->select("count(u.id)")
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch(NonUniqueResultException $e) {
+            return -1;
+        }
     }
 
     /**
