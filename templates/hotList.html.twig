@@ -17,16 +17,16 @@
         </div>
     </header>
     {% for item in list %}
-        <span id="noreferrer-{{ item.id }}"></span>
+        <span id="noreferrer-{{ item.getStringID() }}"></span>
         <section>
             <figure>
-                <img src="{{ item.url }}" alt="{{ item.title }}" rel="noreferrer">
+                <img src="{{ item.getURL() }}" alt="{{ item.getTitle() }}" rel="noreferrer">
             </figure>
             <div>
-                <h2>{{ item.id }}</h2>
-                <h3>标题：{{ item.title }}</h3>
-                <p>UP主：{{ item.author }}</p>
-                <p>封面链接：{{ item.url }}</p>
+                <h2>{{ item.getStringID() }}</h2>
+                <h3>标题：{{ item.getTitle() }}</h3>
+                <p>UP主：{{ item.getAuthor() }}</p>
+                <p>封面链接：{{ item.getURL() }}</p>
             </div>
         </section>
     {% endfor %}
@@ -36,7 +36,7 @@
     <script src="Javascript/referrer-killer.js"></script>
     <script>
         {% for item in list %}
-        document.getElementById('noreferrer-{{ item.id }}').innerHTML = ReferrerKiller.imageHtml('{{ item.url }}');
+        document.getElementById('noreferrer-{{ item.getStringID }}').innerHTML = ReferrerKiller.imageHtml('{{ item.getURL }}');
         {% endfor %}
     </script>
 {% endblock %}

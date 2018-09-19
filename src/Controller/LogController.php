@@ -52,18 +52,13 @@ class LogController extends Controller {
         }
 
         $result = $this->coverRepository->findCoverByTitleAndAuthorAndStringID($title, $author, $stringID, $offset, $limit);
-        $list = [];
-        foreach ($result as $item) {
-            $newItem = $item->stdClass();
-            $list[] = $newItem;
-        }
 
         return $this->render('coverLog.html.twig', array(
             'title' => $title,
             'author' => $author,
             'stringID' => $stringID,
             'page' => $page,
-            'list' => $list
+            'list' => $result,
         ));
     }
 

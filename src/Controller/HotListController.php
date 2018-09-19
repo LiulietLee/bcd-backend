@@ -24,7 +24,7 @@ class HotListController extends Controller {
      */
     public function index() {
         return $this->render('hotList.html.twig', array(
-            'list' => $this->getList(),
+            'list' => $this->hotListManager->getHotList(),
         ));
     }
 
@@ -33,27 +33,18 @@ class HotListController extends Controller {
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function api() {
-        $list = json_encode($this->getList());
-
-        $response = new Response($list);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-    }
-
-    /**
-     * @return \stdClass[]
-     */
-    public function getList() {
         $result = $this->hotListManager->getHotList();
 
-        $list = Array();
+        $list = [];
         foreach ($result as $item) {
             $listItem = $item->stdClass();
             $list[] = $listItem;
         }
 
-        return $list;
-    }
+        $list = json_encode($list);
+        $response = new Response($list);
+        $response->headers->set('Content-Type', 'application/json');
 
+        return $response;
+    }
 }
