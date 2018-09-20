@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Manager\HotListManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HotList extends Controller {
@@ -24,10 +26,8 @@ class HotList extends Controller {
      */
     public function index() {
         $response = $this->render('hotList.html.twig', array(
-            'list' => $this->hotListManager->getHotList(),
+            'list' => $this->getListFromCache(),
         ));
-
-        $response->setSharedMaxAge(600);
 
         return $response;
     }
@@ -37,7 +37,7 @@ class HotList extends Controller {
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function api() {
-        $result = $this->hotListManager->getHotList();
+        $result = $this->getListFromCache();
 
         $list = [];
         foreach ($result as $item) {
@@ -48,8 +48,28 @@ class HotList extends Controller {
         $list = json_encode($list);
         $response = new Response($list);
         $response->headers->set('Content-Type', 'application/json');
-        $response->setSharedMaxAge(600);
 
         return $response;
+    }
+
+    /**
+     * @return \App\Entity\Cover[]
+     */
+    private function getListFromCache(): Array {
+        $cache = new FilesystemAdapter();
+        try {
+            $result = $cache->getItem('hotList');
+        } catch (InvalidArgumentException $e) {
+            return [];
+        }
+        if ($result->isHit()) {
+            return $result->get();
+        } else {
+            $list = $this->hotListManager->getHotList();
+            $result->set($list);
+            $result->expiresAfter(600);
+            $cache->save($result);
+            return $list;
+        }
     }
 }

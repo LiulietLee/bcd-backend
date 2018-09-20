@@ -16,8 +16,6 @@ class IndexController extends Controller {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request) {
-
-
         $searchText = $request->request->get("searchText");
         if ($searchText) {
             if ($searchText != "") {
