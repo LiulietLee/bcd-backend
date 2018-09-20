@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HotListController extends Controller {
+class HotList extends Controller {
 
     /**
      * @var HotListManager
@@ -23,9 +23,13 @@ class HotListController extends Controller {
      * @return Response
      */
     public function index() {
-        return $this->render('hotList.html.twig', array(
+        $response = $this->render('hotList.html.twig', array(
             'list' => $this->hotListManager->getHotList(),
         ));
+
+        $response->setSharedMaxAge(600);
+
+        return $response;
     }
 
     /**
@@ -44,6 +48,7 @@ class HotListController extends Controller {
         $list = json_encode($list);
         $response = new Response($list);
         $response->headers->set('Content-Type', 'application/json');
+        $response->setSharedMaxAge(600);
 
         return $response;
     }
