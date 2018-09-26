@@ -7,6 +7,8 @@ use App\Entity\Record;
 use App\Repository\CoverRepository;
 use App\Repository\RecordRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Psr\Cache\InvalidArgumentException;
 
 class HotListManager extends AbstractManager {
 
@@ -30,7 +32,28 @@ class HotListManager extends AbstractManager {
     /**
      * @return Cover[]
      */
-    public function getHotList() {
+    private function getHotListFromCache() {
+        $cache = new FilesystemAdapter();
+        try {
+            $result = $cache->getItem('hotList');
+        } catch (InvalidArgumentException $e) {
+            return [];
+        }
+        if ($result->isHit()) {
+            return $result->get();
+        } else {
+            $list = $this->getHotListFromDB();
+            $result->set($list);
+            $result->expiresAfter(600);
+            $cache->save($result);
+            return $list;
+        }
+    }
+
+    /**
+     * @return Cover[]
+     */
+    private function getHotListFromDB() {
         $pastDatetime = new \DateTime();
         $pastDatetime->setTimestamp(strtotime("-1 week"));
         $recordList = $this->recordRepository->findRecordsAfterTime($pastDatetime);
@@ -53,6 +76,13 @@ class HotListManager extends AbstractManager {
             }
         }
         return $covers;
+    }
+
+    /**
+     * @return Cover[]
+     */
+    public function getHotList() {
+        return $this->getHotListFromCache();
     }
 
 }
