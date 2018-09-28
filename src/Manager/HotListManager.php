@@ -60,7 +60,8 @@ class HotListManager extends AbstractManager {
         $countList = [];
         foreach ($recordList as $record) {
             if (array_key_exists($record->getStringID(), $countList)) {
-                $countList[$record->getStringID()]++;
+                if ($record->getStringID() != "av7")
+                    $countList[$record->getStringID()]++;
             } else {
                 $countList[$record->getStringID()] = 1;
             }
