@@ -10,8 +10,14 @@
     {% endfor %}
 
     <form action="/log/record" method="get">
+        {% if page > 0 %}
+            <button type="submit" name="page" value="0"><<</button>
+        {% endif %}
         <button type="submit" name="page" value="{{ page - 1 }}">previous page</button>
         <button type="submit" name="page" value="{{ page + 1 }}">next page</button>
+        {% if page < count / 20 - 1 %}
+            <button type="submit" name="page" value="{{ count / 20 }}">>></button>
+        {% endif %}
     </form>
     <br>
     <a href="/log/record/download">Download all records.</a>
