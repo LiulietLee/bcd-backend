@@ -11,7 +11,6 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Psr\Cache\InvalidArgumentException;
 
 class HotListManager extends AbstractManager {
-
     /**
      * @var CoverRepository
      */
@@ -25,6 +24,7 @@ class HotListManager extends AbstractManager {
     public function __construct(EntityManagerInterface $entityManager) {
         parent::__construct($entityManager);
 
+        $this->entityManager = $entityManager;
         $this->coverRepository = $entityManager->getRepository(Cover::class);
         $this->recordRepository = $entityManager->getRepository(Record::class);
     }
@@ -51,32 +51,33 @@ class HotListManager extends AbstractManager {
     }
 
     /**
+     * Raw SQL:
+     * 
+     * select C.*
+     * from record as R, cover as C
+     * where time > now() - interval 1 week and C.strid = R.strid 
+     * group by C.id 
+     * order by count(C.id) desc 
+     * limit 10;   
+     * 
      * @return Cover[]
      */
     private function getHotListFromDB() {
         $pastDatetime = new \DateTime();
         $pastDatetime->setTimestamp(strtotime("-1 week"));
-        $recordList = $this->recordRepository->findRecordsAfterTime($pastDatetime);
-        $countList = [];
-        foreach ($recordList as $record) {
-            if (array_key_exists($record->getStringID(), $countList)) {
-                if ($record->getStringID() != "av7")
-                    $countList[$record->getStringID()]++;
-            } else {
-                $countList[$record->getStringID()] = 1;
-            }
-        }
-        arsort($countList);
-        $covers = [];
-        $counter = 0;
-        foreach($countList as $index => $value) {
-            $cover = $this->coverRepository->findOneByStringID($index);
-            $covers[] = $cover;
-            if (++$counter > 10) {
-                break;
-            }
-        }
-        return $covers;
+
+        $query = $this->entityManager
+            ->createQuery(
+                'SELECT C
+                FROM App\Entity\Record R, App\Entity\Cover C
+                WHERE R.time > :pastDatetime and C.strid = R.strid 
+                GROUP BY C.id 
+                ORDER BY COUNT(C.id) DESC'
+            )
+            ->setParameter('pastDatetime', $pastDatetime)
+            ->setMaxResults(12);
+
+        return $query->getResult();
     }
 
     /**
