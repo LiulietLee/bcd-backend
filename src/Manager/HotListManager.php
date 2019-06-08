@@ -11,6 +11,7 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Psr\Cache\InvalidArgumentException;
 
 class HotListManager extends AbstractManager {
+
     /**
      * @var CoverRepository
      */
@@ -24,7 +25,6 @@ class HotListManager extends AbstractManager {
     public function __construct(EntityManagerInterface $entityManager) {
         parent::__construct($entityManager);
 
-        $this->entityManager = $entityManager;
         $this->coverRepository = $entityManager->getRepository(Cover::class);
         $this->recordRepository = $entityManager->getRepository(Record::class);
     }

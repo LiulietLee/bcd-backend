@@ -39,7 +39,7 @@ class RecordRepository extends ServiceEntityRepository
      * @return Record[]
      */
     public function getRecord(int $offset, int $limit): Array {
-        return $this->findBy([], ["id" => "ASC"], $limit, $offset);
+        return $this->findBy([], ["id" => "DESC"], $limit, $offset);
     }
 
     /**
