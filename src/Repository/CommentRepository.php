@@ -47,4 +47,19 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param string $username
+     * @param string $content
+     * @return Comment
+     */
+    public function create(string $username, string $content): Comment {
+        $newComment = new Comment();
+        $newComment->setContent($content);
+        $newComment->setUsername($username);
+        $newComment->setTime(new \DateTime());
+        $newComment->setSuki(0);
+        $newComment->setKirai(0);
+        return $newComment;
+    }
 }
