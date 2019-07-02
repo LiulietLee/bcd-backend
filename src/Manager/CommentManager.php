@@ -20,6 +20,29 @@ class CommentManager extends AbstractManager {
     }
 
     /**
+     * @param int $commentID
+     */
+    public function deleteComment(int $commentID) {
+        $comment = $this->commentRepository->find($commentID);
+        if (!$comment) {
+            $this->entityManager->remove($comment);
+            $this->entityManager->flush();
+        }
+    }
+
+    /**
+     * @param int $commentID
+     * @param string|null $newContent
+     * @param string|null $newUsername
+     */
+    public function editComment(int $commentID, string $newContent = null, string $newUsername = null) {
+        $comment = $this->commentRepository->find($commentID);
+        if (!$newContent) $comment->setContent($newContent);
+        if (!$newUsername) $comment->setUsername($newUsername);
+        $this->entityManager->flush();
+    }
+
+    /**
      * @param string $username
      * @param string $content
      */

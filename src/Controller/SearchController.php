@@ -33,7 +33,7 @@ class SearchController extends Controller {
     /**
      * @Route("/{content}", name="searchContent")
      * @param string $content
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(string $content) {
         if (strlen($content) < 3) {

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -47,6 +48,29 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return int
+     */
+    public function getCountOfAllComments(): int {
+        $qb = $this->createQueryBuilder('c');
+        try {
+            return $qb->select('count(c.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return -1;
+        }
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return Comment[]
+     */
+    public function fetchComments(int $offset = 0, int $limit = 20): Array {
+        return $this->findBy([], [], $limit, $offset);
+    }
 
     /**
      * @param string $username

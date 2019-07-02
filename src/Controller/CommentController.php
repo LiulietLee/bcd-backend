@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Manager\CommentManager;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,46 @@ class CommentController extends AbstractController {
      */
     private $commentManager;
 
-    public function __construct(CommentManager $commentManager) {
+    /**
+     * @var CommentRepository;
+     */
+    private $commentRepository;
+
+    public function __construct(CommentManager $commentManager, CommentRepository $commentRepository) {
         $this->commentManager = $commentManager;
+        $this->commentRepository = $commentRepository;
     }
 
     /**
-     * @Route("api/comment/new", name="newComment")
+     * Route("/comment", name="commentPage")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    function index(Request $request) {
+        $username = $request->query->get("username", "");
+        $content = $request->query->get("content", "");
+
+        if ($username !== "" || $content !== "") {
+            $this->commentManager->insertComment($username, $content);
+            echo "inserted<br>";
+        }
+
+        $page = $request->query->getInt("page", 0);
+        $limit = 20;
+        $offset = $page * $limit;
+        $list = $this->commentRepository->fetchComments($offset, $limit);
+        $count = $this->commentRepository->getCountOfAllComments();
+
+        return $this->render('comment.html.twig', [
+            'count' => $count,
+            'page' => $page,
+            'list' => $list
+        ]);
+    }
+
+    /**
+     * @Route("/api/comment/new", name="newComment")
      *
      * @param Request $request
      * @return Response
@@ -43,4 +78,5 @@ class CommentController extends AbstractController {
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+
 }
