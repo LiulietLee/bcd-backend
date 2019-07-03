@@ -43,13 +43,24 @@ class CommentManager extends AbstractManager {
     }
 
     /**
+     * @param Comment $comment
+     * @return bool
+     */
+    private function isCommentValid(Comment $comment): bool {
+        // TODO: need to check more
+        
+        return strlen($comment->getUsername()) < 15;
+    }
+
+    /**
      * @param string $username
      * @param string $content
      */
     public function insertComment(string $username, string $content) {
-        // TODO: need to check valid
         $newComment = $this->commentRepository->create($username, $content);
-        $this->entityManager->persist($newComment);
-        $this->entityManager->flush();
+        if ($this->isCommentValid($newComment)) {
+            $this->entityManager->persist($newComment);
+            $this->entityManager->flush();
+        }
     }
 }

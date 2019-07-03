@@ -31,7 +31,9 @@ class SearchController extends Controller {
     }
 
     /**
-     * @Route("/{content}", name="searchContent")
+     * @Route("/{content}", name="searchContent", requirements={
+     *     "content": "(av|cv|lv)\d+"
+     * })
      * @param string $content
      * @return Response
      */

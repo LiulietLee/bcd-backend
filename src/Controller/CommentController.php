@@ -27,7 +27,7 @@ class CommentController extends AbstractController {
     }
 
     /**
-     * Route("/comment", name="commentPage")
+     * @Route("/comment", name="commentPage")
      *
      * @param Request $request
      * @return Response
