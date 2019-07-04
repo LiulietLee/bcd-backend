@@ -49,7 +49,8 @@ class CommentManager extends AbstractManager {
     private function isCommentValid(Comment $comment): bool {
         // TODO: need to check more
 
-        return strlen($comment->getUsername()) < 15;
+        return strlen($comment->getUsername()) < 15
+            && strlen($comment->getContent()) < 100;
     }
 
     /**

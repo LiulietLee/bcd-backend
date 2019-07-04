@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e27995b1-b972-4c3c-8ec2-940eaa26f69f" name="Default" comment="new comment twig">
+    <list default="true" id="e27995b1-b972-4c3c-8ec2-940eaa26f69f" name="Default" comment="remove comment">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CommentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Manager/CommentManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Manager/CommentManager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/comment.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/comment.html.twig" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/vendor/composer/" />
     <ignored path="$PROJECT_DIR$/vendor/doctrine/annotations/" />
@@ -97,8 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/CommentController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="46" column="44" selection-start-line="46" selection-start-column="44" selection-end-line="46" selection-end-column="44" />
+            <state relative-caret-position="540">
+              <caret line="57" column="30" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
               <folding>
                 <element signature="e#34#65#0#PHP" expanded="true" />
               </folding>
@@ -109,8 +107,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Manager/CommentManager.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="401">
+              <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
               <folding>
                 <element signature="e#31#54#0#PHP" expanded="true" />
               </folding>
@@ -121,8 +119,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/comment.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="20" column="55" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
+            <state relative-caret-position="437">
+              <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -222,8 +220,8 @@
         <option value="$PROJECT_DIR$/src/Migrations/Version20180615093053.php" />
         <option value="$PROJECT_DIR$/src/Repository/CommentRepository.php" />
         <option value="$PROJECT_DIR$/src/Controller/SearchController.php" />
-        <option value="$PROJECT_DIR$/templates/comment.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/CommentController.php" />
+        <option value="$PROJECT_DIR$/templates/comment.html.twig" />
         <option value="$PROJECT_DIR$/src/Manager/CommentManager.php" />
       </list>
     </option>
@@ -322,54 +320,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="bcd-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcd-backend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcd-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcd-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcd-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcd-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcd-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcd-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcd-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcd-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Manager" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcd-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcd-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Repository" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcd-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcd-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -437,7 +388,7 @@
       <workItem from="1561983843452" duration="3664000" />
       <workItem from="1562083477344" duration="3380000" />
       <workItem from="1562162294021" duration="2749000" />
-      <workItem from="1562248343368" duration="936000" />
+      <workItem from="1562248343368" duration="1847000" />
     </task>
     <task id="LOCAL-00001" summary="refactor">
       <created>1529057737543</created>
@@ -635,11 +586,18 @@
       <option name="project" value="LOCAL" />
       <updated>1562165901501</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="remove comment">
+      <created>1562249384025</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1562249384025</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57921000" />
+    <option name="totallyTimeSpent" value="58832000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -680,7 +638,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update controllers" />
     <MESSAGE value="fix bugs" />
     <MESSAGE value="add cover log" />
     <MESSAGE value="rename data" />
@@ -705,7 +662,8 @@
     <MESSAGE value="insert comment" />
     <MESSAGE value="new comment index" />
     <MESSAGE value="new comment twig" />
-    <option name="LAST_COMMIT_MESSAGE" value="new comment twig" />
+    <MESSAGE value="remove comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove comment" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Controller/AbstractController.php" />
@@ -1038,27 +996,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/comment.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="55" selection-start-line="20" selection-start-column="55" selection-end-line="20" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/CommentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="46" column="44" selection-start-line="46" selection-start-column="44" selection-end-line="46" selection-end-column="44" />
+        <state relative-caret-position="540">
+          <caret line="57" column="30" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
           <folding>
             <element signature="e#34#65#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/comment.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Manager/CommentManager.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="401">
+          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
           <folding>
             <element signature="e#31#54#0#PHP" expanded="true" />
           </folding>
