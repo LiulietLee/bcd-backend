@@ -24,7 +24,7 @@ class CommentManager extends AbstractManager {
      */
     public function deleteComment(int $commentID) {
         $comment = $this->commentRepository->find($commentID);
-        if (!$comment) {
+        if ($comment) {
             $this->entityManager->remove($comment);
             $this->entityManager->flush();
         }
@@ -48,7 +48,7 @@ class CommentManager extends AbstractManager {
      */
     private function isCommentValid(Comment $comment): bool {
         // TODO: need to check more
-        
+
         return strlen($comment->getUsername()) < 15;
     }
 

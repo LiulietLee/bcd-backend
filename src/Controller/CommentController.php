@@ -33,12 +33,19 @@ class CommentController extends AbstractController {
      * @return Response
      */
     function index(Request $request) {
-        $username = $request->query->get("username", "");
-        $content = $request->query->get("content", "");
+        if ($request->query->has("new")) {
+            $username = $request->query->get("username", "");
+            $content = $request->query->get("content", "");
 
-        if ($username !== "" || $content !== "") {
-            $this->commentManager->insertComment($username, $content);
-            echo "inserted<br>";
+            if ($username !== "" || $content !== "") {
+                $this->commentManager->insertComment($username, $content);
+                echo "inserted<br>";
+            }
+        } else if ($request->request->has("del")) {
+            $commentID = $request->request->getInt("id", -1);
+            if ($commentID >= 0) {
+                $this->commentManager->deleteComment($commentID);
+            }
         }
 
         $page = $request->query->getInt("page", 0);

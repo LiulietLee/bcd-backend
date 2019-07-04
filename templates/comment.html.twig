@@ -6,6 +6,7 @@
     <form action="/comment" method="get">
         username <input type="text" name="username">
         content <input type="text" name="content">
+        <input type="hidden" name="new" value=true>
         <input type="submit" value="go">
     </form>
 
@@ -16,5 +17,10 @@
         <p>{{ item.getContent() }}</p>
         <p>like: {{ item.getSuki }} | dislike: {{ item.getKirai() }}</p>
         <p>{{ item.getTime().format('Y-m-d H:i:s') }}</p>
+        <form action="/comment" method="post">
+            <input type="hidden" name="del" value=true>
+            <input type="hidden" name="id" value="{{ item.getId() }}">
+            <input type="submit" value="Delete">
+        </form>
     {% endfor %}
 {% endblock %}
