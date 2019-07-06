@@ -30,7 +30,8 @@ php bin/console server:run
 /api/search?type=[stringType]&nid=[numberID]
 /api/hot_list
 /api/db/search?type=[stringType]&nid=[numberID]
-/api/db/update(POST: {'type': [stringType], 'nid': [numberID], 'url': [coverURL], 'title': [videoTitle], 'author': [authorName]})
+/api/db/update (post json: {'type': [stringType], 'nid': [numberID], 'url': [coverURL], 'title': [videoTitle], 'author': [authorName]})
+/api/comment/new (post josn: {'username': [username], 'content': [content]})
 ```
 
 ## Cover Spider
