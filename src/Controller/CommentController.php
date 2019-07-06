@@ -86,4 +86,28 @@ class CommentController extends AbstractController {
         return $response;
     }
 
+    /**
+     * @Route("/api/comment/all", name="allComment")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    function fetchComment(Request $request): Response {
+        $page = $request->query->getInt("page");
+        $limit = $request->query->getInt("limit");
+
+        $result = $this->commentRepository->fetchComments($page * $limit, $limit);
+        $list = [];
+        foreach ($result as $item) {
+            $listItem = $item->stdClass();
+            $list[] = $listItem;
+        }
+
+        $list = json_encode($list);
+        $response = new Response($list);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
 }

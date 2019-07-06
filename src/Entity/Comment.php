@@ -105,4 +105,18 @@ class Comment
 
         return $this;
     }
+
+    /**
+     * @return \stdClass
+     */
+    public function stdClass(): \stdClass {
+        $result = new \stdClass();
+        $result->id = $this->getId();
+        $result->username = $this->getUsername();
+        $result->content = $this->getContent();
+        $result->suki = $this->getSuki();
+        $result->kirai = $this->getKirai();
+        $result->time = $this->getTime();
+        return $result;
+    }
 }
