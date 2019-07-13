@@ -116,7 +116,7 @@ class Comment
         $result->content = $this->getContent();
         $result->suki = $this->getSuki();
         $result->kirai = $this->getKirai();
-        $result->time = $this->getTime();
+        $result->time = $this->getTime()->format(\DateTimeInterface::ISO8601);
         return $result;
     }
 }

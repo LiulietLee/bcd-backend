@@ -32,6 +32,7 @@ php bin/console server:run
 /api/db/search?type=[stringType]&nid=[numberID]
 /api/db/update (post json: {'type': [stringType], 'nid': [numberID], 'url': [coverURL], 'title': [videoTitle], 'author': [authorName]})
 /api/comment/new (post josn: {'username': [username], 'content': [content]})
+/api/comment/all?page=[page]&limit=[limit]
 ```
 
 ## Cover Spider
@@ -39,4 +40,4 @@ https://github.com/ApolloZhu/Vaporized-BilibiliCD
 
 ## TODO
 - [ ] PHP version spider
-- [ ] Better frontend UI
+- [ ] ~~Better frontend UI~~
