@@ -38,7 +38,7 @@ class CommentController extends AbstractController {
             $content = $request->query->get("content", "");
 
             if ($username !== "" || $content !== "") {
-                $this->commentManager->insertComment($username, $content);
+                $this->commentManager->addComment($username, $content);
                 echo "inserted<br>";
             }
         } else if ($request->request->has("del")) {
@@ -49,7 +49,7 @@ class CommentController extends AbstractController {
         }
 
         $page = $request->query->getInt("page", 0);
-        $limit = 20;
+        $limit = $request->query->getInt("limit", 20);
         $offset = $page * $limit;
         $list = $this->commentRepository->fetchComments($offset, $limit);
         $count = $this->commentRepository->getCountOfAllComments();
@@ -75,7 +75,7 @@ class CommentController extends AbstractController {
             $username = $param["username"];
             $content = $param["content"];
 
-            $this->commentManager->insertComment($username, $content);
+            $this->commentManager->addComment($username, $content);
             $result = ["status" => 200, "message" => "OK"];
         } else {
             $result = ["status" => 500, "message" => "empty content"];

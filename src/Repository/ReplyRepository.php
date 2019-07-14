@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Comment;
 use App\Entity\Reply;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,32 +21,45 @@ class ReplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Reply::class);
     }
 
-    // /**
-    //  * @return Reply[] Returns an array of Reply objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    /**
+     * @param Comment $comment
+     * @return int
+     */
+    public function getCountOfReplyWithComment(Comment $comment): int {
+        $qb = $this->createQueryBuilder('r');
+        try {
+            return $qb->select('count(r.id)')
+                ->andWhere('r.commentID = :commentID')
+                ->setParameter('commentID', $comment->getId())
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+            return -1;
+        }
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Reply
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    /**
+     * @param Comment $comment
+     * @param int $offset
+     * @param int $limit
+     * @return Reply[]
+     */
+    public function getReplyWithComment(Comment $comment, int $offset = null, int $limit = null): Array {
+        return $this->findBy(['commentID' => $comment->getId()], [], $limit, $offset);
     }
-    */
+
+    /**
+     * @param Comment $comment
+     * @param string $username
+     * @param string $content
+     * @return Reply
+     */
+    public function create(Comment $comment, string $username, string $content): Reply {
+        $newReply = new Reply();
+        $newReply->setUsername($username);
+        $newReply->setContent($content);
+        $newReply->setCommentID($comment->getId());
+        $newReply->setTime(new \DateTime());
+        return $newReply;
+    }
 }

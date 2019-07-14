@@ -1,21 +1,23 @@
 {% extends 'index.html.twig' %}
 
-{% block title %}Comments{% endblock %}
+{% block title %}Reply{% endblock %}
 
 {% block body %}
-    <form action="/comment" method="get">
+    <form action="/comment/{{ comment.getId() }}" method="get">
         username <input type="text" name="username">
         content <input type="text" name="content">
         <input type="hidden" name="new" value=true>
         <input type="submit" value="go">
     </form>
 
+    <h3>ID{{ comment.getId() }} {{ comment.getUsername }}</h3>
+    <h2>{{ comment.getContent() }}</h2>
+
     <p>Count: {{ count }}</p>
     <h3>page: {{ page }}</h3>
     {% for item in list %}
-        <h4><a href="/comment/{{ item.getId() }}">ID{{ item.getId() }}</a> {{ item.getUsername }}</h4>
+        <h4>ID{{ item.getId() }} {{ item.getUsername }}</h4>
         <p>{{ item.getContent() }}</p>
-        <p>like: {{ item.getSuki }} | dislike: {{ item.getKirai() }}</p>
         <p>{{ item.getTime().format('Y-m-d H:i:s') }}</p>
         <form action="/comment" method="post">
             <input type="hidden" name="del" value=true>
