@@ -63,4 +63,30 @@ class ReplyController extends AbstractController {
             'list' => $list
         ]);
     }
+
+    /**
+     * @Route("/api/reply/all/{comment}", name="fetchReplies")
+     *
+     * @param Comment $comment
+     * @param Request $request
+     * @return Response
+     */
+    public function fetch(Comment $comment, Request $request) {
+        $page = $request->query->getInt("page", 0);
+        $limit = $request->query->getInt("limit", 20);
+        $offset = $page * $limit;
+
+        $result = $this->replyRepository->getReplyWithComment($comment, $offset, $limit);
+        $list = [];
+        foreach ($result as $item) {
+            $listItem = $item->stdClass();
+            $list[] = $listItem;
+        }
+
+        $list = json_encode($list);
+        $response = new Response($list);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
 }

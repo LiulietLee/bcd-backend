@@ -33,6 +33,7 @@ php bin/console server:run
 /api/db/update (post json: {'type': [stringType], 'nid': [numberID], 'url': [coverURL], 'title': [videoTitle], 'author': [authorName]})
 /api/comment/new (post josn: {'username': [username], 'content': [content]})
 /api/comment/all?page=[page]&limit=[limit]
+/api/reply/all/[commentID]?page=[page]&limit=[limit]
 ```
 
 ## Cover Spider

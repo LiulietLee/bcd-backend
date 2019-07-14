@@ -88,4 +88,17 @@ class Reply
 
         return $this;
     }
+
+    /**
+     * @return \stdClass
+     */
+    public function stdClass(): \stdClass {
+        $result = new \stdClass();
+        $result->id = $this->getId();
+        $result->username = $this->getUsername();
+        $result->content = $this->getContent();
+        $result->time = $this->getTime()->format(\DateTimeInterface::ISO8601);
+        $result->commentID = $this->getCommentID();
+        return $result;
+    }
 }
