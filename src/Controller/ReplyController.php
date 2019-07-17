@@ -89,4 +89,30 @@ class ReplyController extends AbstractController {
 
         return $response;
     }
+
+    /**
+     * @Route("/api/reply/new/{comment}", name="newReply")
+     *
+     * @param Comment $comment
+     * @param Request $request
+     * @return Response
+     */
+    public function newReply(Comment $comment, Request $request) {
+        $content = $request->getContent();
+        if (!empty($content)) {
+            $param = json_decode($content);
+
+            $username = $param['username'];
+            $content = $param['content'];
+
+            $this->commentManager->addReply($comment, $username, $content);
+            $result = ["status" => 200, "message" => "OK"];
+        } else {
+            $result = ["status" => 500, "message" => "empty content"];
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', "application/json");
+        return $response;
+    }
 }

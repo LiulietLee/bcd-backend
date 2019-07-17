@@ -31,9 +31,10 @@ php bin/console server:run
 /api/hot_list
 /api/db/search?type=[stringType]&nid=[numberID]
 /api/db/update (post json: {'type': [stringType], 'nid': [numberID], 'url': [coverURL], 'title': [videoTitle], 'author': [authorName]})
-/api/comment/new (post josn: {'username': [username], 'content': [content]})
+/api/comment/new (post json: {'username': [username], 'content': [content]})
 /api/comment/all?page=[page]&limit=[limit]
 /api/reply/all/[commentID]?page=[page]&limit=[limit]
+/api/reply/new/[commentID] (post json: {'username': [username], 'content': [content]})
 ```
 
 ## Cover Spider
