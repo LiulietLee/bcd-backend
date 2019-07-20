@@ -100,10 +100,10 @@ class ReplyController extends AbstractController {
     public function newReply(Comment $comment, Request $request) {
         $content = $request->getContent();
         if (!empty($content)) {
-            $param = json_decode($content);
+            $param = json_decode($content, true);
 
-            $username = $param['username'];
-            $content = $param['content'];
+            $username = $param["username"];
+            $content = $param["content"];
 
             $this->commentManager->addReply($comment, $username, $content);
             $result = ["status" => 200, "message" => "OK"];
