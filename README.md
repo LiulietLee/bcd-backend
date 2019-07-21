@@ -35,6 +35,8 @@ php bin/console server:run
 /api/comment/all?page=[page]&limit=[limit]
 /api/reply/all/[commentID]?page=[page]&limit=[limit]
 /api/reply/new/[commentID] (post json: {'username': [username], 'content': [content]})
+/api/comment/like/[commentID]?cancel=[cancel]
+/api/comment/dislike/[commentID]?cancel=[cancel]
 ```
 
 ## Cover Spider
