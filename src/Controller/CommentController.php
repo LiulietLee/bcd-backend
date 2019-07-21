@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Manager\CommentManager;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -107,6 +108,48 @@ class CommentController extends AbstractController {
         $response = new Response($list);
         $response->headers->set('Content-Type', 'application/json');
 
+        return $response;
+    }
+
+    /**
+     * @Route("/api/comment/like/{comment}", name="likeComment")
+     *
+     * @param Comment $comment
+     * @param Request $request
+     * @return Response
+     */
+    function like(Comment $comment, Request $request) {
+        if ($comment && $request->query->has("cancel")) {
+            $acc = $request->query->getBoolean("cancel", true) ? -1 : 1;
+            $this->commentManager->changeLikeOfComment($comment, $acc);
+            $list = ["status" => 200, "message" => "OK"];
+        } else {
+            $list = ["status" => 500, "message" => "wrong api"];
+        }
+
+        $response = new Response(json_encode($list));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * @Route("/api/comment/dislike/{comment}", name="dislikeComment")
+     *
+     * @param Comment $comment
+     * @param Request $request
+     * @return Response
+     */
+    function dislike(Comment $comment, Request $request) {
+        if ($comment && $request->query->has("cancel")) {
+            $acc = $request->query->getBoolean("cancel", true) ? -1 : 1;
+            $this->commentManager->changeDislikeOfComment($comment, $acc);
+            $list = ["status" => 200, "message" => "OK"];
+        } else {
+            $list = ["status" => 500, "message" => "wrong api"];
+        }
+
+        $response = new Response(json_encode($list));
+        $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 

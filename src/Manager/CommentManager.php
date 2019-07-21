@@ -59,8 +59,6 @@ class CommentManager extends AbstractManager {
      * @return bool
      */
     private function isCommentValid(Comment $comment): bool {
-        // TODO: need to check more
-
         return strlen($comment->getUsername()) < 16
             && strlen($comment->getContent()) < 256;
     }
@@ -82,6 +80,33 @@ class CommentManager extends AbstractManager {
         $newComment = $this->commentRepository->create($username, $content);
         if ($this->isCommentValid($newComment)) {
             $this->entityManager->persist($newComment);
+            $this->entityManager->flush();
+        }
+    }
+
+    /**
+     * @param Comment $comment
+     * @param int $acc
+     */
+    public function changeLikeOfComment(Comment $comment, int $acc) {
+        if ($comment) {
+            $newValue = $comment->getSuki() + $acc;
+            $newValue = max(min($newValue, 99999), 0);
+            $comment->setSuki($newValue);
+            $this->entityManager->flush();
+            print_r($acc);
+        }
+    }
+
+    /**
+     * @param Comment $comment
+     * @param int $acc
+     */
+    public function changeDislikeOfComment(Comment $comment, int $acc) {
+        if ($comment) {
+            $newValue = $comment->getKirai() + $acc;
+            $newValue = max(min($newValue, 99999), 0);
+            $comment->setKirai($newValue);
             $this->entityManager->flush();
         }
     }
