@@ -97,6 +97,7 @@ class CommentController extends AbstractController {
         $page = $request->query->getInt("page");
         $limit = $request->query->getInt("limit");
 
+        $count = $this->commentRepository->getCountOfAllComments();
         $result = $this->commentRepository->fetchComments($page * $limit, $limit);
         $list = [];
         foreach ($result as $item) {
@@ -104,7 +105,7 @@ class CommentController extends AbstractController {
             $list[] = $listItem;
         }
 
-        $list = json_encode($list);
+        $list = json_encode(["count" => $count, "data" => $list]);
         $response = new Response($list);
         $response->headers->set('Content-Type', 'application/json');
 

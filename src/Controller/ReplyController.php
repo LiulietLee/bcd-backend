@@ -76,6 +76,7 @@ class ReplyController extends AbstractController {
         $limit = $request->query->getInt("limit", 20);
         $offset = $page * $limit;
 
+        $count = $this->replyRepository->getCountOfReplyWithComment($comment);
         $result = $this->replyRepository->getReplyWithComment($comment, $offset, $limit);
         $list = [];
         foreach ($result as $item) {
@@ -83,7 +84,7 @@ class ReplyController extends AbstractController {
             $list[] = $listItem;
         }
 
-        $list = json_encode($list);
+        $list = json_encode(["count" => $count, "data" => $list]);
         $response = new Response($list);
         $response->headers->set('Content-Type', 'application/json');
 
