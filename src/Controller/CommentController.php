@@ -76,10 +76,14 @@ class CommentController extends AbstractController {
             $username = $param["username"];
             $content = $param["content"];
 
-            $this->commentManager->addComment($username, $content);
-            $result = ["status" => 200, "message" => "OK"];
+            $comment = $this->commentManager->addComment($username, $content);
+            if ($comment) {
+                $result = ["status" => 200, "message" => "OK", "data" => $comment->stdClass()];
+            } else {
+                $result = ["status" => 400, "message" => "cannot insert"];
+            }
         } else {
-            $result = ["status" => 500, "message" => "empty content"];
+            $result = ["status" => 400, "message" => "empty content"];
         }
 
         $response = new Response(json_encode($result));

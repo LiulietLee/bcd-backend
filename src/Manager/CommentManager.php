@@ -75,12 +75,16 @@ class CommentManager extends AbstractManager {
     /**
      * @param string $username
      * @param string $content
+     * @return Comment
      */
-    public function addComment(string $username, string $content) {
+    public function addComment(string $username, string $content): Comment {
         $newComment = $this->commentRepository->create($username, $content);
         if ($this->isCommentValid($newComment)) {
             $this->entityManager->persist($newComment);
             $this->entityManager->flush();
+            return $newComment;
+        } else {
+            return null;
         }
     }
 
@@ -115,12 +119,16 @@ class CommentManager extends AbstractManager {
      * @param Comment $comment
      * @param string $username
      * @param string $content
+     * @return Reply
      */
-    public function addReply(Comment $comment, string $username, string $content) {
+    public function addReply(Comment $comment, string $username, string $content): Reply {
         $newReply = $this->replyReposity->create($comment, $username, $content);
         if ($this->isReplyValid($newReply)) {
             $this->entityManager->persist($newReply);
             $this->entityManager->flush();
+            return $newReply;
+        } else {
+            return null;
         }
     }
 

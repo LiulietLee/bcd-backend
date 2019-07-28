@@ -106,10 +106,14 @@ class ReplyController extends AbstractController {
             $username = $param["username"];
             $content = $param["content"];
 
-            $this->commentManager->addReply($comment, $username, $content);
-            $result = ["status" => 200, "message" => "OK"];
+            $reply = $this->commentManager->addReply($comment, $username, $content);
+            if ($reply) {
+                $result = ["status" => 200, "message" => "OK", "data" => $reply->stdClass()];
+            } else {
+                $result = ["status" => 400, "message" => "cannot insert"];
+            }
         } else {
-            $result = ["status" => 500, "message" => "empty content"];
+            $result = ["status" => 400, "message" => "empty content"];
         }
 
         $response = new Response(json_encode($result));
