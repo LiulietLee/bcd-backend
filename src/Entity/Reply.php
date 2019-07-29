@@ -97,7 +97,7 @@ class Reply
         $result->id = $this->getId();
         $result->username = $this->getUsername();
         $result->content = $this->getContent();
-        $result->time = $this->getTime()->format(\DateTimeInterface::ISO8601);
+        $result->time = $this->getTime()->format('c');
         $result->commentID = $this->getCommentID();
         return $result;
     }
