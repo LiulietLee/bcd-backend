@@ -41,6 +41,11 @@ class Comment
      */
     private $kirai;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $top;
+
     public function getId()
     {
         return $this->id;
@@ -117,6 +122,19 @@ class Comment
         $result->suki = $this->getSuki();
         $result->kirai = $this->getKirai();
         $result->time = $this->getTime()->format('c');
+        $result->top = $this->getTop();
         return $result;
+    }
+
+    public function getTop(): ?int
+    {
+        return $this->top;
+    }
+
+    public function setTop(int $top): self
+    {
+        $this->top = $top;
+
+        return $this;
     }
 }
