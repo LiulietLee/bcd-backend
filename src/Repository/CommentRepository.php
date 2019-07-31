@@ -40,7 +40,7 @@ class CommentRepository extends ServiceEntityRepository
      * @return Comment[]
      */
     public function fetchComments(int $offset = 0, int $limit = 20): Array {
-        return $this->findBy([], [], $limit, $offset);
+        return $this->findBy([], ["top" => "DESC", "id" => "DESC"], $limit, $offset);
     }
 
     /**
