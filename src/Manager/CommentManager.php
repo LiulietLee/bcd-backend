@@ -85,7 +85,7 @@ class CommentManager extends AbstractManager {
      * @param string $content
      * @return Comment
      */
-    public function addComment(string $username, string $content, bool $checkSpc = false): Comment {
+    public function addComment(string $username, string $content, bool $checkSpc = false) {
         if ($checkSpc && $this->hasSpecialCharacters($username)) {
             return null;
         }
@@ -133,7 +133,7 @@ class CommentManager extends AbstractManager {
      * @param string $content
      * @return Reply
      */
-    public function addReply(Comment $comment, string $username, string $content, bool $checkSpc = false): Reply {
+    public function addReply(Comment $comment, string $username, string $content, bool $checkSpc = false) {
         if ($checkSpc && $this->hasSpecialCharacters($username)) {
             return null;
         }
