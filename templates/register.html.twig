@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}register{% endblock %}
+
+{% block body %}
+    <form action="/register" method="post">
+        username <input type="text" name="name">
+        password <input type="text" name="password">
+        <input type="submit" value="register">
+    </form>
+{% endblock %}

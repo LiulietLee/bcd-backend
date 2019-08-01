@@ -8,6 +8,7 @@ use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CommentController extends AbstractController {
@@ -22,9 +23,16 @@ class CommentController extends AbstractController {
      */
     private $commentRepository;
 
-    public function __construct(CommentManager $commentManager, CommentRepository $commentRepository) {
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    public function __construct(
+        CommentManager $commentManager, CommentRepository $commentRepository, SessionInterface $session) {
         $this->commentManager = $commentManager;
         $this->commentRepository = $commentRepository;
+        $this->session = $session;
     }
 
     /**
@@ -34,6 +42,9 @@ class CommentController extends AbstractController {
      * @return Response
      */
     function index(Request $request) {
+        $auth = $this->session->get("auth", 0);
+        if ($auth < 1) return $this->redirect("/login");
+
         if ($request->query->has("new")) {
             $username = $request->query->get("username", "");
             $content = $request->query->get("content", "");
@@ -76,7 +87,7 @@ class CommentController extends AbstractController {
             $username = $param["username"];
             $content = $param["content"];
 
-            $comment = $this->commentManager->addComment($username, $content);
+            $comment = $this->commentManager->addComment($username, $content, true);
             if ($comment) {
                 $result = ["status" => 200, "message" => "OK", "data" => $comment->stdClass()];
             } else {

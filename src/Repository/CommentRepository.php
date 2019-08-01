@@ -55,6 +55,7 @@ class CommentRepository extends ServiceEntityRepository
         $newComment->setTime(new \DateTime());
         $newComment->setSuki(0);
         $newComment->setKirai(0);
+        $newComment->setTop(0);
         return $newComment;
     }
 }

@@ -55,12 +55,20 @@ class CommentManager extends AbstractManager {
     }
 
     /**
+     * @param string $str
+     * @return bool
+     */
+    private function hasSpecialCharacters(string $str): bool {
+        return preg_match('/.*[^A-Za-z0-9].*/', $str);
+    }
+
+    /**
      * @param Comment $comment
      * @return bool
      */
     private function isCommentValid(Comment $comment): bool {
         return strlen($comment->getUsername()) < 16
-            && strlen($comment->getContent()) < 256;
+            && strlen($comment->getContent()) < 1350;
     }
 
     /**
@@ -69,7 +77,7 @@ class CommentManager extends AbstractManager {
      */
     private function isReplyValid(Reply $reply): bool {
         return strlen($reply->getUsername()) < 16
-            && strlen($reply->getContent()) < 100;
+            && strlen($reply->getContent()) < 1350;
     }
 
     /**
@@ -77,7 +85,11 @@ class CommentManager extends AbstractManager {
      * @param string $content
      * @return Comment
      */
-    public function addComment(string $username, string $content): Comment {
+    public function addComment(string $username, string $content, bool $checkSpc = false): Comment {
+        if ($checkSpc && $this->hasSpecialCharacters($username)) {
+            return null;
+        }
+
         $newComment = $this->commentRepository->create($username, $content);
         if ($this->isCommentValid($newComment)) {
             $this->entityManager->persist($newComment);
@@ -121,7 +133,11 @@ class CommentManager extends AbstractManager {
      * @param string $content
      * @return Reply
      */
-    public function addReply(Comment $comment, string $username, string $content): Reply {
+    public function addReply(Comment $comment, string $username, string $content, bool $checkSpc = false): Reply {
+        if ($checkSpc && $this->hasSpecialCharacters($username)) {
+            return null;
+        }
+
         $newReply = $this->replyRepository->create($comment, $username, $content);
         if ($this->isReplyValid($newReply)) {
             $this->entityManager->persist($newReply);

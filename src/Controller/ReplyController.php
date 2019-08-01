@@ -8,6 +8,7 @@ use App\Repository\ReplyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReplyController extends AbstractController {
@@ -22,9 +23,16 @@ class ReplyController extends AbstractController {
      */
     private $commentManager;
 
-    public function __construct(ReplyRepository $replyRepository, CommentManager $commentManager) {
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    public function __construct(
+        ReplyRepository $replyRepository, CommentManager $commentManager, SessionInterface $session) {
         $this->replyRepository = $replyRepository;
         $this->commentManager = $commentManager;
+        $this->session = $session;
     }
 
     /**
@@ -35,6 +43,9 @@ class ReplyController extends AbstractController {
      * @return Response
      */
     public function index(Comment $comment, Request $request) {
+        $auth = $this->session->get("auth", 0);
+        if ($auth < 1) return $this->redirect("/login");
+
         if ($request->query->has("new")) {
             $username = $request->query->get("username", "");
             $content = $request->query->get("content", "");
@@ -106,7 +117,7 @@ class ReplyController extends AbstractController {
             $username = $param["username"];
             $content = $param["content"];
 
-            $reply = $this->commentManager->addReply($comment, $username, $content);
+            $reply = $this->commentManager->addReply($comment, $username, $content, true);
             if ($reply) {
                 $result = ["status" => 200, "message" => "OK", "data" => $reply->stdClass()];
             } else {
