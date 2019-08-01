@@ -32,7 +32,7 @@ class HotListManager extends AbstractManager {
     /**
      * @return Cover[]
      */
-    private function getHotListFromCache() {
+    private function getHotListFromCacheOrDB() {
         $cache = new FilesystemAdapter();
         try {
             $result = $cache->getItem('hotList');
@@ -84,7 +84,7 @@ class HotListManager extends AbstractManager {
      * @return Cover[]
      */
     public function getHotList() {
-        return $this->getHotListFromCache();
+        return $this->getHotListFromCacheOrDB();
     }
 
 }

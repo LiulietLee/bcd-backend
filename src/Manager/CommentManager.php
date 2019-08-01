@@ -18,13 +18,13 @@ class CommentManager extends AbstractManager {
     /**
      * @var ReplyRepository
      */
-    private $replyReposity;
+    private $replyRepository;
 
     public function __construct(EntityManagerInterface $entityManager) {
         parent::__construct($entityManager);
 
         $this->commentRepository = $entityManager->getRepository(Comment::class);
-        $this->replyReposity = $entityManager->getRepository(Reply::class);
+        $this->replyRepository = $entityManager->getRepository(Reply::class);
     }
 
     /**
@@ -34,7 +34,7 @@ class CommentManager extends AbstractManager {
         $comment = $this->commentRepository->find($commentID);
         if ($comment) {
             $this->entityManager->remove($comment);
-            $replies = $this->replyReposity->getReplyWithComment($comment);
+            $replies = $this->replyRepository->getReplyWithComment($comment);
             foreach ($replies as $reply) {
                 $this->entityManager->remove($reply);
             }
@@ -122,7 +122,7 @@ class CommentManager extends AbstractManager {
      * @return Reply
      */
     public function addReply(Comment $comment, string $username, string $content): Reply {
-        $newReply = $this->replyReposity->create($comment, $username, $content);
+        $newReply = $this->replyRepository->create($comment, $username, $content);
         if ($this->isReplyValid($newReply)) {
             $this->entityManager->persist($newReply);
             $this->entityManager->flush();
@@ -136,7 +136,7 @@ class CommentManager extends AbstractManager {
      * @param int $replyID
      */
     public function deleteReply(int $replyID) {
-        $reply = $this->replyReposity->find($replyID);
+        $reply = $this->replyRepository->find($replyID);
         if ($reply) {
             $this->entityManager->remove($reply);
             $this->entityManager->flush();
