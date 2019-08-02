@@ -140,6 +140,7 @@ class CommentManager extends AbstractManager {
 
         $newReply = $this->replyRepository->create($comment, $username, $content);
         if ($this->isReplyValid($newReply)) {
+            $comment->setReplyCount($comment->getReplyCount() + 1);
             $this->entityManager->persist($newReply);
             $this->entityManager->flush();
             return $newReply;
@@ -154,6 +155,8 @@ class CommentManager extends AbstractManager {
     public function deleteReply(int $replyID) {
         $reply = $this->replyRepository->find($replyID);
         if ($reply) {
+            $comment = $this->commentRepository->find($reply->getCommentID());
+            $comment->setReplyCount($comment->getReplyCount() - 1);
             $this->entityManager->remove($reply);
             $this->entityManager->flush();
         }

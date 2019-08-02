@@ -19,7 +19,7 @@
         <h4>ID{{ item.getId() }} {{ item.getUsername }}</h4>
         <p>{{ item.getContent() }}</p>
         <p>{{ item.getTime().format('Y-m-d H:i:s') }}</p>
-        <form action="/comment" method="post">
+        <form action="/comment/{{ comment.getId() }}" method="post">
             <input type="hidden" name="del" value=true>
             <input type="hidden" name="id" value="{{ item.getId() }}">
             <input type="submit" value="Delete">

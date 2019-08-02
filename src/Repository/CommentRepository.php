@@ -56,6 +56,7 @@ class CommentRepository extends ServiceEntityRepository
         $newComment->setSuki(0);
         $newComment->setKirai(0);
         $newComment->setTop(0);
+        $newComment->setReplyCount(0);
         return $newComment;
     }
 }

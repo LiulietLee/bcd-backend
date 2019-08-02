@@ -17,6 +17,7 @@
         <p>{{ item.getContent() }}</p>
         <p>like: {{ item.getSuki }} | dislike: {{ item.getKirai() }}</p>
         <p>{{ item.getTime().format('Y-m-d H:i:s') }}</p>
+        <p>Reply Count: {{ item.getReplyCount() }}</p>
         <form action="/comment" method="post">
             <input type="hidden" name="del" value=true>
             <input type="hidden" name="id" value="{{ item.getId() }}">

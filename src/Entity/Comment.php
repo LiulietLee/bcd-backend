@@ -46,6 +46,11 @@ class Comment
      */
     private $top;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $replyCount;
+
     public function getId()
     {
         return $this->id;
@@ -123,6 +128,7 @@ class Comment
         $result->kirai = $this->getKirai();
         $result->time = $this->getTime()->format('c');
         $result->top = $this->getTop();
+        $result->replyCount = $this->getReplyCount();
         return $result;
     }
 
@@ -134,6 +140,18 @@ class Comment
     public function setTop(int $top): self
     {
         $this->top = $top;
+
+        return $this;
+    }
+
+    public function getReplyCount(): ?int
+    {
+        return $this->replyCount;
+    }
+
+    public function setReplyCount(int $replyCount): self
+    {
+        $this->replyCount = $replyCount;
 
         return $this;
     }
