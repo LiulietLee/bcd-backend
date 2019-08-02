@@ -58,6 +58,10 @@ class CommentController extends AbstractController {
             if ($commentID >= 0) {
                 $this->commentManager->deleteComment($commentID);
             }
+        } else if ($request->request->has("recomputeReplyCount")) {
+            $page = $request->query->getInt("page", 0);
+            $limit = $request->query->getInt("limit", 20);
+            $this->commentManager->recomputeReplyCountWithPageAndLimit($page, $limit);
         }
 
         $page = $request->query->getInt("page", 0);

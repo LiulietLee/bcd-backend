@@ -13,6 +13,12 @@
     <h3>ID{{ comment.getId() }} {{ comment.getUsername }}</h3>
     <h2>{{ comment.getContent() }}</h2>
 
+    <form action="/comment/{{ comment.getId() }}" method="post">
+        top value: <input type="number" name="top" value="{{ comment.getTop() }}">
+        <input type="hidden" name="topChanged" value=true>
+        <input type="submit" value="OK">
+    </form>
+
     <p>Count: {{ count }}</p>
     <h3>page: {{ page }}</h3>
     {% for item in list %}

@@ -47,10 +47,25 @@ class CommentManager extends AbstractManager {
      * @param string|null $newContent
      * @param string|null $newUsername
      */
-    public function editComment(int $commentID, string $newContent = null, string $newUsername = null) {
-        $comment = $this->commentRepository->find($commentID);
-        if (!$newContent) $comment->setContent($newContent);
-        if (!$newUsername) $comment->setUsername($newUsername);
+    public function editComment(
+        Comment $comment, int $newTop = 0, string $newContent = null, string $newUsername = null) {
+        if ($newContent) $comment->setContent($newContent);
+        if ($newUsername) $comment->setUsername($newUsername);
+        $comment->setTop($newTop);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param int $page
+     * @param int $limit
+     */
+    public function recomputeReplyCountWithPageAndLimit(int $page, int $limit) {
+        $offset = $page * $limit;
+        $list = $this->commentRepository->fetchComments($offset, $limit);
+        foreach ($list as $comment) {
+            $count = $this->replyRepository->getCountOfReplyWithComment($comment);
+            $comment->setReplyCount($count);
+        }
         $this->entityManager->flush();
     }
 

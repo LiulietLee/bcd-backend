@@ -59,6 +59,9 @@ class ReplyController extends AbstractController {
             if ($replyID >= 0) {
                 $this->commentManager->deleteReply($replyID);
             }
+        } else if ($request->request->has("topChanged")) {
+            $newTop = $request->request->getInt("top", 0);
+            $this->commentManager->editComment($comment, $newTop);
         }
 
         $page = $request->query->getInt("page", 0);
