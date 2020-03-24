@@ -8,6 +8,7 @@ class CoverType {
     const Video = 1;
     const Article = 2;
     const Live = 3;
+    const BVideo = 4;
 
     static function typeFromString(string $str): ?int {
         $lowerStr = strtolower($str);
@@ -15,6 +16,7 @@ class CoverType {
             case "av": return CoverType::Video;
             case "cv": return CoverType::Article;
             case "lv": return CoverType::Live;
+            case "BV": return CoverType::BVideo;
             default: return null;
         }
     }
@@ -29,6 +31,9 @@ class CoverType {
                 break;
             case CoverType::Article:
                 $id = "cv";
+                break;
+            case CoverType::BVideo:
+                $id = "BV";
                 break;
             default: return null;
         }

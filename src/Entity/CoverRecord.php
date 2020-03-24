@@ -154,6 +154,9 @@ class CoverRecord
             case CoverType::Live:
                 $id .= "lv";
                 break;
+            case CoverType::BVideo:
+                $id .= "BV";
+                break;
             default:
                 return null;
         }
@@ -172,6 +175,9 @@ class CoverRecord
                 break;
             case CoverType::Live:
                 $id .= "lv";
+                break;
+            case CoverType::BVideo:
+                $id .= "BV";
                 break;
             default:
                 return null;
