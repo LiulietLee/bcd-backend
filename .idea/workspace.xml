@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e27995b1-b972-4c3c-8ec2-940eaa26f69f" name="Default" comment="update BV">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Type/CoverType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Type/CoverType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/DBController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DBController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -199,14 +198,7 @@
       <workItem from="1581678351980" duration="112000" />
       <workItem from="1582048614421" duration="105000" />
       <workItem from="1585059966830" duration="749000" />
-      <workItem from="1585123795395" duration="144000" />
-    </task>
-    <task id="LOCAL-00003" summary="fix bugs">
-      <created>1529139794167</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1529139794167</updated>
+      <workItem from="1585123795395" duration="380000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <created>1530004498590</created>
@@ -544,7 +536,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585060643086</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="update BV">
+      <created>1585124072716</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1585124072717</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TodoView">
@@ -601,10 +600,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="update BV" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="208" y="23" key="CommitChangelistDialog2" timestamp="1585060642554">
+    <state x="208" y="23" key="CommitChangelistDialog2" timestamp="1585124250132">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state x="208" y="23" key="CommitChangelistDialog2/0.23.1280.777@0.23.1280.777" timestamp="1585060642554" />
+    <state x="208" y="23" key="CommitChangelistDialog2/0.23.1280.777@0.23.1280.777" timestamp="1585124250132" />
     <state x="253" y="124" width="774" height="574" key="find.popup" timestamp="1585060423169">
       <screen x="0" y="23" width="1280" height="777" />
     </state>

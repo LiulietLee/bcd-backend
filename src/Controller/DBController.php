@@ -28,6 +28,8 @@ class DBController extends Controller {
      */
     function updateRecord(Request $request) {
         $content = $request->getContent();
+        $result = ["status" => 500, "message" => "empty content"];
+
         if (!empty($content)) {
             $params = json_decode($content, true);
 
@@ -39,10 +41,10 @@ class DBController extends Controller {
             $author = $params["author"];
             $stringID = CoverType::getStringIDByTypeAndNID($type, $nid);
 
-            $this->coverManager->updateOrCreateCoverBy($stringID, $title, $url, $author);
-            $result = ["status" => 200, "message" => "OK"];
-        } else {
-            $result = ["status" => 500, "message" => "empty content"];
+            if ($stringID != "av1") {
+                $this->coverManager->updateOrCreateCoverBy($stringID, $title, $url, $author);
+                $result = ["status" => 200, "message" => "OK"];
+            }
         }
 
         $response = new Response(json_encode($result));
