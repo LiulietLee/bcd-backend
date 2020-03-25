@@ -16,12 +16,12 @@ class CoverType {
             case "av": return CoverType::Video;
             case "cv": return CoverType::Article;
             case "lv": return CoverType::Live;
-            case "BV": return CoverType::BVideo;
+            case "bv": return CoverType::BVideo;
             default: return null;
         }
     }
 
-    static function getStringIDByTypeAndNID(int $type, int $nid): ?string {
+    static function getStringIDByTypeAndNID(int $type, string $nid): ?string {
         switch ($type) {
             case CoverType::Video:
                 $id = "av";
