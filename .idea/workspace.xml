@@ -2,7 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e27995b1-b972-4c3c-8ec2-940eaa26f69f" name="Default" comment="update BV">
+      <change afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/BaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.dist" beforeDir="false" afterPath="$PROJECT_DIR$/.env.dist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/bcd-backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bcd-backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CommentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/DBController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DBController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HotList.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HotList.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReplyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReplyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,7 +24,7 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
-      <executable />
+      <executable path="composer" />
     </execution>
   </component>
   <component name="Git.Settings">
@@ -101,18 +113,25 @@
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
     </include_path>
   </component>
   <component name="ProjectId" id="1Pwc6yYO15tCKlJgirXwN0kdgpU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/vendor" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="SvnConfiguration">
@@ -199,6 +218,12 @@
       <workItem from="1582048614421" duration="105000" />
       <workItem from="1585059966830" duration="749000" />
       <workItem from="1585123795395" duration="380000" />
+      <workItem from="1591112567705" duration="65000" />
+      <workItem from="1591112652534" duration="1182000" />
+      <workItem from="1591115490602" duration="13000" />
+      <workItem from="1591453127711" duration="125000" />
+      <workItem from="1591453334942" duration="3387000" />
+      <workItem from="1591539155942" duration="1377000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <created>1530004498590</created>
@@ -556,20 +581,19 @@
     </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new comment twig" />
@@ -600,13 +624,37 @@
     <option name="LAST_COMMIT_MESSAGE" value="update BV" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1740" y="136" key="#Plugins" timestamp="1591112631919">
+      <screen x="1280" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1740" y="136" key="#Plugins/0.23.1280.777/1280.23.1920.1057@1280.23.1920.1057" timestamp="1591112631919" />
+    <state x="1928" y="288" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1591453133120">
+      <screen x="1280" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1928" y="288" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.1280.777/1280.23.1920.1057@1280.23.1920.1057" timestamp="1591453133120" />
+    <state x="1912" y="256" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1591458234712">
+      <screen x="1280" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1912" y="256" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1280.777/1280.23.1920.1057@1280.23.1920.1057" timestamp="1591458234712" />
     <state x="208" y="23" key="CommitChangelistDialog2" timestamp="1585124250132">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
     <state x="208" y="23" key="CommitChangelistDialog2/0.23.1280.777@0.23.1280.777" timestamp="1585124250132" />
+    <state x="1971" y="460" width="538" height="287" key="ComposerInitDialogKey" timestamp="1591112847061">
+      <screen x="1280" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1971" y="460" width="538" height="287" key="ComposerInitDialogKey/0.23.1280.777/1280.23.1920.1057@1280.23.1920.1057" timestamp="1591112847061" />
+    <state x="1922" y="235" key="NewPhpClassDialog" timestamp="1591453841495">
+      <screen x="1280" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1922" y="235" key="NewPhpClassDialog/0.23.1280.777/1280.23.1920.1057@1280.23.1920.1057" timestamp="1591453841495" />
     <state x="253" y="124" width="774" height="574" key="find.popup" timestamp="1585060423169">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
     <state x="253" y="124" width="774" height="574" key="find.popup/0.23.1280.777@0.23.1280.777" timestamp="1585060423169" />
+    <state x="1960" y="315" key="refactoring.ChangeSignatureDialog" timestamp="1591454043155">
+      <screen x="1280" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1960" y="315" key="refactoring.ChangeSignatureDialog/0.23.1280.777/1280.23.1920.1057@1280.23.1920.1057" timestamp="1591454043155" />
   </component>
 </project>

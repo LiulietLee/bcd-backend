@@ -4,14 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Manager\CommentManager;
+use App\Repository\CommentRepository;
 use App\Repository\ReplyRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ReplyController extends AbstractController {
+class ReplyController extends BaseController {
 
     /**
      * @var ReplyRepository
@@ -24,14 +24,21 @@ class ReplyController extends AbstractController {
     private $commentManager;
 
     /**
+     * @var CommentRepository
+     */
+    private $commentRepository;
+
+    /**
      * @var SessionInterface
      */
     private $session;
 
     public function __construct(
-        ReplyRepository $replyRepository, CommentManager $commentManager, SessionInterface $session) {
+        ReplyRepository $replyRepository, CommentManager $commentManager,
+        CommentRepository $commentRepository, SessionInterface $session) {
         $this->replyRepository = $replyRepository;
         $this->commentManager = $commentManager;
+        $this->commentRepository = $commentRepository;
         $this->session = $session;
     }
 
@@ -79,26 +86,31 @@ class ReplyController extends AbstractController {
     }
 
     /**
-     * @Route("/api/reply/all/{comment}", name="fetchReplies")
+     * @Route("/api/reply/all/{id}", name="fetchReplies")
      *
-     * @param Comment $comment
+     * @param int $id
      * @param Request $request
      * @return Response
      */
-    public function fetch(Comment $comment, Request $request) {
+    public function fetch(int $id, Request $request) {
         $page = $request->query->getInt("page", 0);
         $limit = $request->query->getInt("limit", 20);
         $offset = $page * $limit;
 
-        $count = $this->replyRepository->getCountOfReplyWithComment($comment);
-        $result = $this->replyRepository->getReplyWithComment($comment, $offset, $limit);
-        $list = [];
-        foreach ($result as $item) {
-            $listItem = $item->stdClass();
-            $list[] = $listItem;
+        if ($this->needRedirect()) {
+            return $this->redirect($this->redirectURL("/api/reply/all/$id?page=$page&limit=$limit"));
         }
 
-        $list = json_encode(["count" => $count, "data" => $list]);
+        $comment = $this->commentRepository->find($id);
+        if ($comment) {
+            $count = $this->replyRepository->getCountOfReplyWithComment($comment);
+            $result = $this->replyRepository->getReplyWithComment($comment, $offset, $limit);
+
+            $list = $this->listJson($count, $result);
+        } else {
+            $list = json_encode(["count" => 0, "data" => []]);
+        }
+
         $response = new Response($list);
         $response->headers->set('Content-Type', 'application/json');
 
@@ -106,25 +118,35 @@ class ReplyController extends AbstractController {
     }
 
     /**
-     * @Route("/api/reply/new/{comment}", name="newReply")
+     * @Route("/api/reply/new/{id}", name="newReply")
      *
-     * @param Comment $comment
+     * @param int $id
      * @param Request $request
      * @return Response
      */
-    public function newReply(Comment $comment, Request $request) {
+    public function newReply(int $id, Request $request) {
         $content = $request->getContent();
         if (!empty($content)) {
             $param = json_decode($content, true);
 
+            if ($this->needRedirect()) {
+                $res = $this->redirectWithPath("/api/reply/new/$id", 'POST', $param);
+                if ($res) return $res;
+            }
+
             $username = $param["username"];
             $content = $param["content"];
 
-            $reply = $this->commentManager->addReply($comment, $username, $content, true);
-            if ($reply) {
-                $result = ["status" => 200, "message" => "OK", "data" => $reply->stdClass()];
+            $comment = $this->commentRepository->find($id);
+            if ($comment) {
+                $reply = $this->commentManager->addReply($comment, $username, $content, true);
+                if ($reply) {
+                    $result = ["status" => 200, "message" => "OK", "data" => $reply->stdClass()];
+                } else {
+                    $result = ["status" => 400, "message" => "cannot insert"];
+                }
             } else {
-                $result = ["status" => 400, "message" => "cannot insert"];
+                $result = ["status" => 400, "message" => "no comment id $id"];
             }
         } else {
             $result = ["status" => 400, "message" => "empty content"];

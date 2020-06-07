@@ -5,13 +5,12 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Manager\CommentManager;
 use App\Repository\CommentRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CommentController extends AbstractController {
+class CommentController extends BaseController {
 
     /**
      * @var CommentManager
@@ -88,6 +87,11 @@ class CommentController extends AbstractController {
         if (!empty($comment)) {
             $param = json_decode($comment, true);
 
+            if ($this->needRedirect()) {
+                $res = $this->redirectWithPath('/api/db/update', 'POST', $param);
+                if ($res) return $res;
+            }
+
             $username = $param["username"];
             $content = $param["content"];
 
@@ -116,6 +120,10 @@ class CommentController extends AbstractController {
         $page = $request->query->getInt("page");
         $limit = $request->query->getInt("limit");
 
+        if ($this->needRedirect()) {
+            return $this->redirect($this->redirectURL("/api/comment/all?page=$page&limit=$limit"));
+        }
+
         $count = $this->commentRepository->getCountOfAllComments();
         $result = $this->commentRepository->fetchComments($page * $limit, $limit);
         $list = [];
@@ -132,13 +140,19 @@ class CommentController extends AbstractController {
     }
 
     /**
-     * @Route("/api/comment/like/{comment}", name="likeComment")
+     * @Route("/api/comment/like/{id}", name="likeComment")
      *
-     * @param Comment $comment
+     * @param int $id
      * @param Request $request
      * @return Response
      */
-    function like(Comment $comment, Request $request) {
+    function like(int $id, Request $request) {
+        if ($this->needRedirect()) {
+            $cancel = $request->query->get("cancel");
+            return $this->redirect($this->redirectURL("/api/comment/like/$id?cancel=$cancel"));
+        }
+
+        $comment = $this->commentRepository->find($id);
         if ($comment && $request->query->has("cancel")) {
             $acc = $request->query->getBoolean("cancel", true) ? -1 : 1;
             $this->commentManager->changeLikeOfComment($comment, $acc);
@@ -153,13 +167,19 @@ class CommentController extends AbstractController {
     }
 
     /**
-     * @Route("/api/comment/dislike/{comment}", name="dislikeComment")
+     * @Route("/api/comment/dislike/{id}", name="dislikeComment")
      *
-     * @param Comment $comment
+     * @param int $id
      * @param Request $request
      * @return Response
      */
-    function dislike(Comment $comment, Request $request) {
+    function dislike(int $id, Request $request) {
+        if ($this->needRedirect()) {
+            $cancel = $request->query->get("cancel");
+            return $this->redirect($this->redirectURL("/api/comment/dislike/$id?cancel=$cancel"));
+        }
+
+        $comment = $this->commentRepository->find($id);
         if ($comment && $request->query->has("cancel")) {
             $acc = $request->query->getBoolean("cancel", true) ? -1 : 1;
             $this->commentManager->changeDislikeOfComment($comment, $acc);

@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Manager\CoverManager;
 use App\Type\CoverType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
-class DBController extends Controller {
+class DBController extends BaseController {
 
     /**
      * @var CoverManager
@@ -32,6 +33,11 @@ class DBController extends Controller {
 
         if (!empty($content)) {
             $params = json_decode($content, true);
+
+            if ($this->needRedirect()) {
+                $res = $this->redirectWithPath('/api/db/update', 'POST', $params);
+                if ($res) { return $res; }
+            }
 
             $typeString = $params["type"];
             $type = CoverType::typeFromString($typeString);

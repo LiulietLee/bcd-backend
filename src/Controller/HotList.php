@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Manager\HotListManager;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HotList extends Controller {
+class HotList extends BaseController {
 
     /**
      * @var HotListManager
@@ -23,18 +23,20 @@ class HotList extends Controller {
      * @return Response
      */
     public function index() {
-        $response = $this->render('hotList.html.twig', array(
+        return $this->render('hotList.html.twig', array(
             'list' => $this->hotListManager->getHotList(),
         ));
-
-        return $response;
     }
 
     /**
      * @Route("/api/hot_list", name="hotListAPI")
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function api() {
+        if ($this->needRedirect()) {
+            return $this->redirect($this->redirectURL('/api/hot_list'));
+        }
+
         $result = $this->hotListManager->getHotList();
 
         $list = [];
