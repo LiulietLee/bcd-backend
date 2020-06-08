@@ -14,7 +14,7 @@ class BaseController extends AbstractController
      * @return bool
      */
     protected function needRedirect(): bool {
-        return getenv('need_redirect') == true;
+        return getenv('need_redirect') == 'true';
     }
 
     /**
