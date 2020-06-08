@@ -128,6 +128,9 @@
     "symfony/dotenv": {
         "version": "v4.0.9"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.9"
+    },
     "symfony/event-dispatcher": {
         "version": "v4.0.9"
     },
@@ -205,6 +208,9 @@
     },
     "symfony/polyfill-php72": {
         "version": "v1.8.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v4.0.9"
