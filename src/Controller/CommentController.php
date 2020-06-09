@@ -88,7 +88,7 @@ class CommentController extends BaseController {
             $param = json_decode($comment, true);
 
             if ($this->needRedirect()) {
-                $res = $this->redirectWithPath('/api/db/update', 'POST', $param);
+                $res = $this->redirectWithPath('/api/comment/new', 'POST', $param);
                 if ($res) return $res;
             }
 

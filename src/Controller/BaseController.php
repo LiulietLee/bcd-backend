@@ -6,6 +6,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class BaseController extends AbstractController
@@ -31,12 +32,18 @@ class BaseController extends AbstractController
      * @param array $param
      * @return Response|null
      */
-    protected function redirectWithPath(string $path, string $method = 'GET', array $param = []): ?Response {
+    protected function redirectWithPath(string $path, string $method = 'GET', array $param = []) {
         $url = $this->redirectURL($path);
         $client = HttpClient::create();
         try {
-            return $client->request($method, $url, $param);
-        } catch (TransportExceptionInterface $e) {
+            $res = $client->request($method, $url, [
+                'json' => $param,
+            ]);
+            $content = $res->toArray();
+            $response = new Response(json_encode($content));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } catch (ExceptionInterface $e) {
             return null;
         }
     }
